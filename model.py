@@ -5,7 +5,6 @@ app.config['SQLALCHEMY_DATABASE_URI']='postgresql://postgres:test@localhost/Perf
 app.config['SQLALCHEMY_ECHO'] = False
 db = SQLAlchemy(app)
 
-
 class Customer(db.Model):
     __tablename__ = 'customer'
     cus_id = db.Column(db.Integer, primary_key=True)
@@ -23,8 +22,6 @@ class Order(db.Model):
     order_date=db.Column(db.DateTime)
     customer_id=db.Column(db.Integer, db.ForeignKey('customer.cus_id'))
     carrier_id = db.Column(db.Integer,db.ForeignKey('Employee.memberID'))
-#Employee için class oluşturulduğunda __tablename__ yazan yerdeki isim Employee olacak ve memberID columnuna sahip olacak
-
 
 class Made_by(db.Model):
     __tablename__ = 'Made_by'
