@@ -74,8 +74,42 @@ class Department(db.Model):
     salary = db.Column(db.Integer)
     c_id= db.Column(db.Integer,db.ForeignKey('Company.C_id'))
 
+class Carrier(db.Model):
+    __tablename__ = 'Carrier'
+    drivingLicenceType= db.Column(db.String(20))
+    vehicle_id = db.Column(db.Integer, db.ForeignKey('Vehicle.vehicle_id'))
+    memberID= db.Column(db.Integer,db.ForeignKey('Employee.memberID'))
 
+class Sells(db.Model):
+    __tablename__ = 'Sells'
+    ProductID = db.Column(db.Integer, db.ForeignKey('Perfume.ProductId'))
+    C_id= db.Column(db.Integer,db.ForeignKey('Company.C_id'))
 
+class Admin(db.Model):
+    __tablename__ = 'Admin'
+    memberID = db.Column(db.Integer, db.ForeignKey('Employee.memberID'))
+    C_id = db.Column(db.Integer, db.ForeignKey('Company.C_id'))
+
+class Analyst(db.Model):
+    __tablename__ = 'Analyst'
+    memberID = db.Column(db.Integer, db.ForeignKey('Employee.memberID'))
+    method=db.Column(db.String(40))
+
+class Customer_Service(db.Model):
+    __tablename__ = 'Customer_Service'
+    memberID = db.Column(db.Integer, db.ForeignKey('Employee.memberID'))
+
+class Supplier(db.Model):
+    __tablename__ = 'Supplier'
+    memberID = db.Column(db.Integer, db.ForeignKey('Employee.memberID'))
+
+class Accountant(db.Model):
+    __tablename__ = 'Accountant'
+     memberID = db.Column(db.Integer, db.ForeignKey('Employee.memberID'))
+
+class Worker(db.Model):
+    __tablename__ = 'Worker'
+     memberID = db.Column(db.Integer, db.ForeignKey('Employee.memberID'))
 
 # db.create_all() tum tablelar bittikten sonra bunu calistiracagiz (normalizasyon dahil)
 
