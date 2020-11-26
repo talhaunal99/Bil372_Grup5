@@ -74,6 +74,70 @@ class Department(db.Model):
     salary = db.Column(db.Integer)
     c_id= db.Column(db.Integer,db.ForeignKey('Company.C_id'))
 
+class Confirms(db.Model):
+    __tablename__ = 'Confirms'
+    ProductID = db.Column(db.Integer, db.ForeignKey('Perfume.ProductID'))
+    memberID = db.Column(db.Integer, db.ForeignKey('Employee.memberID'))
+    verification_no = db.Column(db.Integer)
+
+class Packages(db.Model):
+    __tablename__ = 'Packages'
+    packageID = db.Column(db.Integer, primary_key = True)
+    ProductID = db.Column(db.Integer, db.ForeignKey('Perfume.ProductId'))
+    memberID = db.Column(db.Integer, db.ForeignKey('Employee.memberID'))
+    Expiration_Date = db.Column(db.DateTime)
+    production_Date = db.Column(db.DateTime)
+
+class ConsistOf(db.Model):
+    __tablename__ = 'ConsistOf'
+    product_id = db.Column(db.Integer, db.ForeignKey('Perfume.ProductID'))
+    mat_id = db.Column(db.Integer, db.ForeignKey('Material.mat_id'))
+
+class Includes(db.Model):
+    __tablename__ = 'Includes'
+    order_no = db.Column(db.Integer, db.ForeignKey('Order.order_no'))
+    ProductId = db.Column(db.Integer, db.ForeignKey('Product.ProductID'))
+    quantitiy = db.Column(db.Integer)
+
+class Company(db.Model):
+    __tablename__ = 'Company'
+    C_id = db.Column(db.Integer, primary_key = True)
+    Name = db.Column(db.String(80))
+    Budget = db.Column(db.Integer)
+    Address = db.Column(db.String(200))
+    TelNo = db.Column(db.String(11))
+
+class Manages(db.Model):
+    __tablename__ = 'Manages'
+    C_id = db.Column(db.Integer, db.ForeignKey('Company.C_id'))
+
+class Produces(db.Model):
+    __tablename__ = 'Produces'
+    chemist_id = db.Column(db.Integer, db.ForeignKey('Employee.memberID'))
+    ProductID = db.Column(db.Integer, db.ForeignKey('Perfume.ProductID'))
+
+class Material(db.Model):
+    __tablename__ = 'Material'
+    mat_id = db.Column(db.Integer, primary_key = True)
+    mat_name = db.Column(db.String(80))
+    mat_region = db.Column(db.String(80))
+    mat_stock = db.Column(db.Integer)
+    mat_price = db.Column(db.Integer)
+
+class Employee(db.Model):
+    __tablename__ = 'Employee'
+    memberID = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(30))
+    surname = db.Column(db.String(30))
+    address = db.Column(db.String(200))
+    telNo = db.Column(db.String(11))
+    Birthdate = db.Column(db.DateTime)
+    startDate = db.Column(db.DateTime)
+    salary = db.Column(db.Integer)
+    email = db.Column(db.String(80))
+    Department = db.Column(db.String(80))
+    Company_id = db.Column(db.Integer, db.ForeignKey('Company.C_id'))
+
 class Carrier(db.Model):
     __tablename__ = 'Carrier'
     drivingLicenceType= db.Column(db.String(20))
@@ -112,9 +176,6 @@ class Worker(db.Model):
      memberID = db.Column(db.Integer, db.ForeignKey('Employee.memberID'))
 
 # db.create_all() tum tablelar bittikten sonra bunu calistiracagiz (normalizasyon dahil)
-
-
-
 
 if __name__ == '__main__':
     app.run()
