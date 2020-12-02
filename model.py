@@ -26,17 +26,17 @@ class Order(db.Model):
 class Made_by(db.Model):
     __tablename__ = 'Made_by'
     madebyID = db.Column(db.Integer, primary_key=True)
-    perfumeID=db.Column(db.Integer,db.ForeignKey('ProductId'))
+    perfumeID=db.Column(db.Integer,db.ForeignKey('Perfume.ProductID'))
 
 class Content(db.Model):
     __tablename__ = 'Content'
     contentId = db.Column(db.Integer, primary_key=True)
-    perfumeID=db.Column(db.Integer,db.ForeignKey('ProductId'))
+    perfumeID=db.Column(db.Integer,db.ForeignKey('Perfume.ProductID'))
 
 class Takes(db.Model):
     __tablename__ = 'Takes'
-    matId = db.Column(db.Integer,db.ForeignKey('mat_id'))
-    memberId=db.Column(db.Integer,db.ForeignKey('memberID'))
+    matId = db.Column(db.Integer,db.ForeignKey('Material.mat_id'),primary_key=True)
+    memberId=db.Column(db.Integer,db.ForeignKey('Employee.memberID'),primary_key=True)
     quantity=db.Column(db.Integer)
     firm_name=db.Column(db.String(40))
     cost=db.Column(db.Integer)
@@ -56,7 +56,7 @@ class Perfume(db.Model):
     __tablename__ = 'Perfume'
     Category = db.Column(db.String(20))
     ProductID=db.Column(db.Integer,primary_key=True)
-    Content=db.Column(db.Array(db.String(40)))
+    Content=db.Column(db.String(40))
     Price=db.Column(db.Integer)
     Duration = db.Column(db.Integer)
     NumberOfStock= db.Column(db.Integer)
@@ -73,28 +73,28 @@ class Department(db.Model):
 
 class Confirms(db.Model):
     __tablename__ = 'Confirms'
-    ProductID = db.Column(db.Integer, db.ForeignKey('Perfume.ProductID'))
-    memberID = db.Column(db.Integer, db.ForeignKey('Employee.memberID'))
+    ProductID = db.Column(db.Integer, db.ForeignKey('Perfume.ProductID'),primary_key=True)
+    memberID = db.Column(db.Integer, db.ForeignKey('Employee.memberID'),primary_key=True)
     verification_no = db.Column(db.Integer)
 
 class Packages(db.Model):
     __tablename__ = 'Packages'
     packageID = db.Column(db.Integer, primary_key = True)
-    ProductID = db.Column(db.Integer, db.ForeignKey('Perfume.ProductId'))
+    ProductID = db.Column(db.Integer, db.ForeignKey('Perfume.ProductID'))
     memberID = db.Column(db.Integer, db.ForeignKey('Employee.memberID'))
     Expiration_Date = db.Column(db.DateTime)
     production_Date = db.Column(db.DateTime)
 
 class ConsistOf(db.Model):
     __tablename__ = 'ConsistOf'
-    product_id = db.Column(db.Integer, db.ForeignKey('Perfume.ProductID'))
-    mat_id = db.Column(db.Integer, db.ForeignKey('Material.mat_id'))
+    product_id = db.Column(db.Integer, db.ForeignKey('Perfume.ProductID'),primary_key=True)
+    mat_id = db.Column(db.Integer, db.ForeignKey('Material.mat_id'),primary_key=True)
 
 class Includes(db.Model):
     __tablename__ = 'Includes'
-    order_no = db.Column(db.Integer, db.ForeignKey('Order.order_no'))
-    ProductId = db.Column(db.Integer, db.ForeignKey('Product.ProductID'))
-    quantitiy = db.Column(db.Integer)
+    order_no = db.Column(db.Integer, db.ForeignKey('Order.order_no'),primary_key=True)
+    ProductId = db.Column(db.Integer, db.ForeignKey('Perfume.ProductID'),primary_key=True)
+    quantity = db.Column(db.Integer)
 
 class Company(db.Model):
     __tablename__ = 'Company'
@@ -106,12 +106,13 @@ class Company(db.Model):
 
 class Manages(db.Model):
     __tablename__ = 'Manages'
-    C_id = db.Column(db.Integer, db.ForeignKey('Company.C_id'))
+    C_id = db.Column(db.Integer, db.ForeignKey('Company.C_id'),primary_key=True)
+    memberID = db.Column(db.Integer, db.ForeignKey('Employee.memberID'),primary_key=True)
 
 class Produces(db.Model):
     __tablename__ = 'Produces'
-    chemist_id = db.Column(db.Integer, db.ForeignKey('Employee.memberID'))
-    ProductID = db.Column(db.Integer, db.ForeignKey('Perfume.ProductID'))
+    chemist_id = db.Column(db.Integer, db.ForeignKey('Employee.memberID'),primary_key=True)
+    ProductID = db.Column(db.Integer, db.ForeignKey('Perfume.ProductID'),primary_key=True)
 
 class Material(db.Model):
     __tablename__ = 'Material'
@@ -138,41 +139,42 @@ class Employee(db.Model):
 class Carrier(db.Model):
     __tablename__ = 'Carrier'
     drivingLicenceType= db.Column(db.String(20))
-    vehicle_id = db.Column(db.Integer, db.ForeignKey('Vehicle.vehicle_id'))
-    memberID= db.Column(db.Integer,db.ForeignKey('Employee.memberID'))
+    vehicle_id = db.Column(db.Integer, db.ForeignKey('Vehicle.vehicle_id'),primary_key=True)
+    memberID= db.Column(db.Integer,db.ForeignKey('Employee.memberID'),primary_key=True)
 
 class Sells(db.Model):
     __tablename__ = 'Sells'
-    ProductID = db.Column(db.Integer, db.ForeignKey('Perfume.ProductId'))
-    C_id= db.Column(db.Integer,db.ForeignKey('Company.C_id'))
+    ProductID = db.Column(db.Integer, db.ForeignKey('Perfume.ProductID'),primary_key=True)
+    C_id= db.Column(db.Integer,db.ForeignKey('Company.C_id'),primary_key=True)
 
 class Admin(db.Model):
     __tablename__ = 'Admin'
-    memberID = db.Column(db.Integer, db.ForeignKey('Employee.memberID'))
+    memberID = db.Column(db.Integer, db.ForeignKey('Employee.memberID'),primary_key=True)
     C_id = db.Column(db.Integer, db.ForeignKey('Company.C_id'))
 
 class Analyst(db.Model):
     __tablename__ = 'Analyst'
-    memberID = db.Column(db.Integer, db.ForeignKey('Employee.memberID'))
+    memberID = db.Column(db.Integer, db.ForeignKey('Employee.memberID'),primary_key=True)
     method=db.Column(db.String(40))
 
 class Customer_Service(db.Model):
     __tablename__ = 'Customer_Service'
-    memberID = db.Column(db.Integer, db.ForeignKey('Employee.memberID'))
+    memberID = db.Column(db.Integer, db.ForeignKey('Employee.memberID'),primary_key=True)
 
 class Supplier(db.Model):
     __tablename__ = 'Supplier'
-    memberID = db.Column(db.Integer, db.ForeignKey('Employee.memberID'))
+    memberID = db.Column(db.Integer, db.ForeignKey('Employee.memberID'),primary_key=True)
 
 class Accountant(db.Model):
     __tablename__ = 'Accountant'
-     memberID = db.Column(db.Integer, db.ForeignKey('Employee.memberID'))
+    memberID = db.Column(db.Integer, db.ForeignKey('Employee.memberID'),primary_key=True)
 
 class Worker(db.Model):
     __tablename__ = 'Worker'
-     memberID = db.Column(db.Integer, db.ForeignKey('Employee.memberID'))
-
-# db.create_all() tum tablelar bittikten sonra bunu calistiracagiz (normalizasyon dahil)
-
+    memberID = db.Column(db.Integer, db.ForeignKey('Employee.memberID'),primary_key=True)
+class Chemist(db.Model):
+    __tablename__ = 'Chemist'
+    memberID = db.Column(db.Integer, db.ForeignKey('Employee.memberID'),primary_key=True)
+db.create_all()
 if __name__ == '__main__':
     app.run()
