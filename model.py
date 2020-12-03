@@ -7,7 +7,7 @@ db = SQLAlchemy(app)
 
 class Customer(db.Model):
     __tablename__ = 'customer'
-    cus_id = db.Column(db.Integer, primary_key=True)
+    cus_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     cus_sex=db.Column(db.Boolean)
     cus_email=db.Column(db.String(80), unique=True)
     cus_name = db.Column(db.String(80))
@@ -16,17 +16,33 @@ class Customer(db.Model):
     cus_telNo=db.Column(db.String)
     cus_totalOrder=db.Column(db.Integer)
 
+class User(db.Model):
+    __tablename__='User'
+    userID=db.Column(db.Integer,autoincrement=True,primary_key=True)
+    username=db.Column(db.String)
+    password=db.Column(db.String)
+    userType=db.Column(db.String)
+
+class Admin(db.Model):
+    adminId=db.Column(db.Integer,default=0,primary_key=True,autoincrement=True)
+    username=db.Column(db.String)
+    password=db.Column(db.String)
+
 class Order(db.Model):
     __tablename__ = 'Order'
-    order_no = db.Column(db.Integer, primary_key=True)
-    order_date=db.Column(db.DateTime)
+    order_no = db.Column(db.Integer, primary_key=True, autoincrement=True)
     customer_id=db.Column(db.Integer, db.ForeignKey('customer.cus_id'))
     carrier_id = db.Column(db.Integer,db.ForeignKey('Employee.memberID'))
 
+orderDate = db.Table('orderDate',
+                           db.Column('order_no',db.Integer,db.ForeignKey('Order.order_no')),
+                           db.Column('order_date',db.DateTime))
+
+
 class Made_by(db.Model):
     __tablename__ = 'Made_by'
-    madebyID = db.Column(db.Integer, primary_key=True)
-    perfumeID=db.Column(db.Integer,db.ForeignKey('Perfume.ProductID'))
+    madebyID = db.Column(db.Integer, db.ForeignKey('Employee.memberID'),primary_key=True)
+    perfumeID=db.Column(db.Integer,db.ForeignKey('Perfume.ProductID'),primary_key=True)
 
 class Content(db.Model):
     __tablename__ = 'Content'
@@ -38,36 +54,47 @@ class Takes(db.Model):
     matId = db.Column(db.Integer,db.ForeignKey('Material.mat_id'),primary_key=True)
     memberId=db.Column(db.Integer,db.ForeignKey('Employee.memberID'),primary_key=True)
     quantity=db.Column(db.Integer)
-    firm_name=db.Column(db.String(40))
     cost=db.Column(db.Integer)
+
+takesFirm=db.Table('takesFirm',
+                   db.Column('matId',db.Integer,db.ForeignKey('Material.mat_id',primary_key=True)),
+                    db.Column('memberId',db.Integer,db.ForeignKey('Employee.memberID'),primary_key=True),
+                    db.Column('firm_name',db.Integer))
 
 class Vehicle(db.Model):
     __tablename__ = 'Vehicle'
     c_id = db.Column(db.Integer,db.ForeignKey('Company.C_id'))
-    vehicle_id=db.Column(db.Integer,primary_key=True)
+    vehicle_id=db.Column(db.Integer,primary_key=True,autoincrement=True)
     package=db.Column(db.Integer) #the number of products which are carried
-    licence_plate=db.Column(db.String(40))
-    kilometer=db.Column(db.Integer)
-    first_price = db.Column(db.Integer)
-    last_price= db.Column(db.Integer)
-    vehicle_type=db.Column(db.String)
+
+vehicleFeatures=db.Table('vehicleFeatures',
+                         db.Column('vehicle_id',db.Integer,primary_key=True,autoincrement=True),
+                         db.Column('licence',db.String(40)),
+                         db.Column('kilometer',db.Integer),
+                         db.Column('first_price',db.Integer),
+                         db.Column('last_price',db.Integer),
+                         db.Column('vehicle_type',db.String))
 
 class Perfume(db.Model):
     __tablename__ = 'Perfume'
     Category = db.Column(db.String(20))
-    ProductID=db.Column(db.Integer,primary_key=True)
+    ProductID=db.Column(db.Integer,primary_key=True,autoincrement=True)
     Content=db.Column(db.String(40))
     Price=db.Column(db.Integer)
     Duration = db.Column(db.Integer)
     NumberOfStock= db.Column(db.Integer)
-    made_by=db.Column(db.Integer,db.ForeignKey('Employee.memberID'))
+
+
+madePerfume=db.Table('madePerfume',
+                     db.Column('ProductId',db.Integer,primary_key=True,autoincrement=True),
+                     db.Column('made_by',db.Integer,db.ForeignKey('Employee.memberID')))
 
 class Department(db.Model):
     __tablename__ = 'Department'
     dep_address = db.Column(db.String(20))
     dep_TelNo=db.Column(db.String(40))
     dep_name=db.Column(db.String(40))
-    department_id=db.Column(db.Integer,primary_key=True)
+    department_id=db.Column(db.Integer,primary_key=True,autoincrement=True)
     salary = db.Column(db.Integer)
     c_id= db.Column(db.Integer,db.ForeignKey('Company.C_id'))
 
@@ -79,11 +106,15 @@ class Confirms(db.Model):
 
 class Packages(db.Model):
     __tablename__ = 'Packages'
-    packageID = db.Column(db.Integer, primary_key = True)
+    packageID = db.Column(db.Integer, primary_key = True,autoincrement=True)
     ProductID = db.Column(db.Integer, db.ForeignKey('Perfume.ProductID'))
     memberID = db.Column(db.Integer, db.ForeignKey('Employee.memberID'))
-    Expiration_Date = db.Column(db.DateTime)
-    production_Date = db.Column(db.DateTime)
+
+productFeature=db.Table('productFeature',
+                        db.Column('packageID',db.Integer,primary_key=True,autoincrement=True),
+                        db.Column('ProductId',db.Integer,db.ForeignKey('Perfume.ProductID')),
+                        db.Column('Expiration_Date',db.DateTime),
+                        db.Column('production_Date',db.DateTime))
 
 class ConsistOf(db.Model):
     __tablename__ = 'ConsistOf'
@@ -94,11 +125,14 @@ class Includes(db.Model):
     __tablename__ = 'Includes'
     order_no = db.Column(db.Integer, db.ForeignKey('Order.order_no'),primary_key=True)
     ProductId = db.Column(db.Integer, db.ForeignKey('Perfume.ProductID'),primary_key=True)
-    quantity = db.Column(db.Integer)
+
+productQuantity=db.Table('productQuantity',
+                         db.Column('order_no',db.Integer,db.ForeignKey('Order.order_no'),primary_key=True),
+                         db.Column('quantity',db.Integer))
 
 class Company(db.Model):
     __tablename__ = 'Company'
-    C_id = db.Column(db.Integer, primary_key = True)
+    C_id = db.Column(db.Integer, primary_key = True,autoincrement=True)
     Name = db.Column(db.String(80))
     Budget = db.Column(db.Integer)
     Address = db.Column(db.String(200))
@@ -116,7 +150,7 @@ class Produces(db.Model):
 
 class Material(db.Model):
     __tablename__ = 'Material'
-    mat_id = db.Column(db.Integer, primary_key = True)
+    mat_id = db.Column(db.Integer, primary_key = True,autoincrement=True)
     mat_name = db.Column(db.String(80))
     mat_region = db.Column(db.String(80))
     mat_stock = db.Column(db.Integer)
@@ -124,7 +158,7 @@ class Material(db.Model):
 
 class Employee(db.Model):
     __tablename__ = 'Employee'
-    memberID = db.Column(db.Integer, primary_key=True)
+    memberID = db.Column(db.Integer, primary_key=True,autoincrement=True)
     name = db.Column(db.String(30))
     surname = db.Column(db.String(30))
     address = db.Column(db.String(200))
@@ -134,13 +168,20 @@ class Employee(db.Model):
     salary = db.Column(db.Integer)
     email = db.Column(db.String(80))
     Department = db.Column(db.String(80))
-    Company_id = db.Column(db.Integer, db.ForeignKey('Company.C_id'))
+
+
+employeesOfCompany=db.Table('employessOfCompany',
+                            db.Column('memberId',db.Integer,db.ForeignKey('Employee.memberID'),primary_key=True),
+                            db.Column('Company_id',db.Integer, db.ForeignKey('Company.C_id'),primary_key=True))
 
 class Carrier(db.Model):
     __tablename__ = 'Carrier'
-    drivingLicenceType= db.Column(db.String(20))
     vehicle_id = db.Column(db.Integer, db.ForeignKey('Vehicle.vehicle_id'),primary_key=True)
     memberID= db.Column(db.Integer,db.ForeignKey('Employee.memberID'),primary_key=True)
+
+memberLicenceType=db.Table('memberLicenceType',
+                      db.Column('memberID',db.Integer,db.ForeignKey('Employee.memberID'),primary_key=True),
+                      db.Column('drivingLicenceType',db.String(20)))
 
 class Sells(db.Model):
     __tablename__ = 'Sells'
