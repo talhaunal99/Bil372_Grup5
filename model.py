@@ -216,9 +216,12 @@ class Accountant(db.Model):
 class Worker(db.Model):
     __tablename__ = 'Worker'
     memberID = db.Column(db.Integer, db.ForeignKey('Employee.memberID'),primary_key=True)
+
 class Chemist(db.Model):
     __tablename__ = 'Chemist'
     memberID = db.Column(db.Integer, db.ForeignKey('Employee.memberID'),primary_key=True)
+
 db.create_all()
+
 if __name__ == '__main__':
     app.run()
