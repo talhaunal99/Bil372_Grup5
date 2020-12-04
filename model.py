@@ -3,7 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 import datetime
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI']='postgresql://postgres:test@localhost/Perfume Database'
+app.config['SQLALCHEMY_DATABASE_URI']='postgresql://postgres:password@localhost/Perfume Database'
 app.config['SQLALCHEMY_ECHO'] = False
 db = SQLAlchemy(app)
 
@@ -43,11 +43,6 @@ class User(db.Model):
         self.password = password
         self.userType = userType
 
-
-class Admin(db.Model):
-    adminId=db.Column(db.Integer,default=0,primary_key=True,autoincrement=True)
-    username=db.Column(db.String)
-    password=db.Column(db.String)
 
 class Order(db.Model):
     __tablename__ = 'Order'
