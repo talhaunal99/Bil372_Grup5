@@ -1,7 +1,7 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI']='postgresql://postgres:test@localhost/Perfume Database'
+app.config['SQLALCHEMY_DATABASE_URI']='postgresql://postgres:test@localhost/PerfumeDatabase'
 app.config['SQLALCHEMY_ECHO'] = False
 db = SQLAlchemy(app)
 
