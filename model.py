@@ -16,16 +16,19 @@ class Customer(db.Model):
     cus_telNo=db.Column(db.String)
     cus_totalOrder=db.Column(db.Integer)
 
-class User(db.Model):
-    __tablename__='User'
-    userID=db.Column(db.Integer,autoincrement=True,primary_key=True)
-    username=db.Column(db.String)
-    password=db.Column(db.String)
-    userType=db.Column(db.String)
+class EmployeeLogin(db.Model):
+    customerID = db.Column(db.Integer, db.ForeignKey('Employee.memberID'), primary_key=True)
+    username = db.Column(db.String, unique=True)
+    password = db.Column(db.String)
 
-class Admin(db.Model):
+class CustomerLogin(db.Model):
+    customerID=db.Column(db.Integer, db.ForeignKey('customer.cus_id'),primary_key=True)
+    username=db.Column(db.String,unique=True)
+    password=db.Column(db.String)
+
+class AdminLogin(db.Model):
     adminId=db.Column(db.Integer,default=0,primary_key=True,autoincrement=True)
-    username=db.Column(db.String)
+    username=db.Column(db.String,unique=True)
     password=db.Column(db.String)
 
 class Order(db.Model):
