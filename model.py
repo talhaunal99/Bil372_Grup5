@@ -17,17 +17,17 @@ class Customer(db.Model):
     cus_totalOrder=db.Column(db.Integer)
 
 class EmployeeLogin(db.Model):
-    customerID = db.Column(db.Integer, db.ForeignKey('Employee.memberID'), primary_key=True)
+    customerID = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String, unique=True)
     password = db.Column(db.String)
 
 class CustomerLogin(db.Model):
-    customerID=db.Column(db.Integer, db.ForeignKey('customer.cus_id'),primary_key=True)
+    customerID=db.Column(db.Integer,primary_key=True)
     username=db.Column(db.String,unique=True)
     password=db.Column(db.String)
 
 class AdminLogin(db.Model):
-    adminId=db.Column(db.Integer,default=0,primary_key=True,autoincrement=True)
+    adminId=db.Column(db.Integer,primary_key=True)
     username=db.Column(db.String,unique=True)
     password=db.Column(db.String)
 
