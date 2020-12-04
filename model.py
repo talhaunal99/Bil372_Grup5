@@ -86,6 +86,7 @@ class Perfume(db.Model):
     Price=db.Column(db.Integer)
     Duration = db.Column(db.Integer)
     NumberOfStock= db.Column(db.Integer)
+    Explanation=db.Column(db.String)
 
 
 madePerfume=db.Table('madePerfume',
