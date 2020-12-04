@@ -1,5 +1,7 @@
-from flask import Flask
+from flask import Flask, render_template, redirect, url_for, request, flash
 from flask_sqlalchemy import SQLAlchemy
+import datetime
+
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI']='postgresql://postgres:test@localhost/Perfume Database'
 app.config['SQLALCHEMY_ECHO'] = False
@@ -16,12 +18,31 @@ class Customer(db.Model):
     cus_telNo=db.Column(db.String)
     cus_totalOrder=db.Column(db.Integer)
 
+    def __init__(self, cus_sex, cus_email,
+                 cus_name, cus_surname, cus_Birthdate,
+                 cus_telNo, cus_totalOrder):
+        self.cus_sex = cus_sex
+        self.cus_email = cus_email
+        self.cus_name = cus_name
+        self.cus_surname = cus_surname
+        self.cus_Birthdate = cus_Birthdate
+        self.cus_telNo = cus_telNo
+        self.cus_totalOrder = cus_totalOrder
+
+
 class User(db.Model):
     __tablename__='User'
     userID=db.Column(db.Integer,autoincrement=True,primary_key=True)
     username=db.Column(db.String)
     password=db.Column(db.String)
     userType=db.Column(db.String)
+
+    def __init__(self, username,
+                 password, userType):
+        self.username = username
+        self.password = password
+        self.userType = userType
+
 
 class Admin(db.Model):
     adminId=db.Column(db.Integer,default=0,primary_key=True,autoincrement=True)
@@ -213,9 +234,87 @@ class Accountant(db.Model):
 class Worker(db.Model):
     __tablename__ = 'Worker'
     memberID = db.Column(db.Integer, db.ForeignKey('Employee.memberID'),primary_key=True)
+
 class Chemist(db.Model):
     __tablename__ = 'Chemist'
     memberID = db.Column(db.Integer, db.ForeignKey('Employee.memberID'),primary_key=True)
-db.create_all()
-if __name__ == '__main__':
-    app.run()
+
+#------------------------- FUNCTIONS -------------------------
+
+@app.route('/')
+def home():
+    return render_template('home.html')
+
+@app.route('/login')
+def login():
+    return render_template('login.html')
+
+@app.route('/user_page', methods=['GET', 'POST'])
+def user_login():
+    if request.method == 'POST':
+        if not request.form['username'] or not request.form['password']:
+            flash('Please enter all the fields', 'error')
+        else:
+            username = request.form.get('username')
+            password = request.form.get('password')
+
+            user = User.query.filter_by(username=username, password=password).first()
+
+            if user:
+                if (user.userType == "customer"):
+                    return render_template('customer_page.html', content = username)
+
+
+@app.route('/register', methods=['GET', 'POST'])
+def signup_page():
+    return render_template('register.html')
+
+@app.route('/signup', methods=['GET', 'POST'])
+def register():
+    if request.method == 'POST':
+        if False:
+            return render_template('register.html')
+        else:
+            email = request.form.get('email')
+            cus_info = Customer.query.filter_by(cus_email = email).first()
+
+            if cus_info:
+                flash('This email belongs to another account')
+                return render_template('login.html')
+            else:
+                if (request.form.get('gender') == "male"):
+                    cus_sex = False
+                else:
+                    cus_sex = True
+
+                cus_email = request.form.get('email')
+                cus_name = request.form.get('name')
+                cus_surname = request.form.get('surname')
+                cus_Birthdate = request.form.get('birthdate')
+                cus_telNo = request.form.get('telno')
+                username = request.form.get('username')
+                password = request.form.get('password')
+                cus_totalOrder = 0
+                userType = "customer"
+
+            cus_info = Customer(cus_sex=cus_sex,
+                                cus_email=cus_email,
+                                cus_name=cus_name,
+                                cus_surname=cus_surname,
+                                cus_Birthdate=cus_Birthdate,
+                                cus_telNo=cus_telNo,
+                                cus_totalOrder=cus_totalOrder)
+
+            user_info = User(username,
+                             password,
+                             userType)
+
+            db.session.add(cus_info)
+            db.session.commit()
+            db.session.add(user_info)
+            db.session.commit()
+            return render_template('login.html')
+
+if __name__ == "__main__":
+    db.create_all()
+    app.run(debug = True)
