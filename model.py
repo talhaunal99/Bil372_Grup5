@@ -1,7 +1,10 @@
-from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
+from flask import Flask, request, flash, url_for, redirect, render_template, make_response
+from flask_migrate import Migrate
+import datetime
+
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI']='postgresql://postgres:test@localhost/PerfumeDatabase'
+app.config['SQLALCHEMY_DATABASE_URI']='postgresql://postgres:1234@localhost/Perfume Database'
 app.config['SQLALCHEMY_ECHO'] = False
 db = SQLAlchemy(app)
 
@@ -16,20 +19,44 @@ class Customer(db.Model):
     cus_telNo=db.Column(db.String)
     cus_totalOrder=db.Column(db.Integer)
 
+    def __init__(self, cus_sex, cus_email, cus_name, cus_surname, cus_Birthdate, cus_telNo, cus_totalOrder):
+        self.cus_sex = cus_sex
+        self.cus_email = cus_email
+        self.cus_name = cus_name
+        self.cus_surname = cus_surname
+        self.cus_Birthdate = cus_Birthdate
+        self.cus_telNo = cus_telNo
+        self.cus_totalOrder = cus_totalOrder
+
 class EmployeeLogin(db.Model):
-    customerID = db.Column(db.Integer, primary_key=True)
+    employeeID = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String, unique=True)
     password = db.Column(db.String)
+
+    def __init__(self, customerID, username, password):
+        self.customerID = customerID
+        self.username = username
+        self.password = password
 
 class CustomerLogin(db.Model):
     customerID=db.Column(db.Integer,primary_key=True)
     username=db.Column(db.String,unique=True)
     password=db.Column(db.String)
 
+    def __init__(self, customerID, username, password):
+        self.customerID = customerID
+        self.username = username
+        self.password = password
+
 class AdminLogin(db.Model):
     adminId=db.Column(db.Integer,primary_key=True)
     username=db.Column(db.String,unique=True)
     password=db.Column(db.String)
+
+    def __init__(self, adminId, username, password):
+        self.adminId = adminId
+        self.username = username
+        self.password = password
 
 class Order(db.Model):
     __tablename__ = 'Order'
@@ -86,7 +113,6 @@ class Perfume(db.Model):
     Price=db.Column(db.Integer)
     Duration = db.Column(db.Integer)
     NumberOfStock= db.Column(db.Integer)
-    Explanation=db.Column(db.String)
 
 
 madePerfume=db.Table('madePerfume',
@@ -173,6 +199,16 @@ class Employee(db.Model):
     email = db.Column(db.String(80))
     Department = db.Column(db.String(80))
 
+    def __init__(self, name, surname, address, telNo, Birthdate, startDate, salary, email, Department):
+        self.name = name
+        self.surname = surname
+        self.address = address
+        self.telNo = telNo
+        self.Birthdate = Birthdate
+        self.startDate = startDate
+        self.salary = salary
+        self.email = email
+        self.Department = Department
 
 employeesOfCompany=db.Table('employessOfCompany',
                             db.Column('memberId',db.Integer,db.ForeignKey('Employee.memberID'),primary_key=True),
@@ -222,7 +258,246 @@ class Chemist(db.Model):
     __tablename__ = 'Chemist'
     memberID = db.Column(db.Integer, db.ForeignKey('Employee.memberID'),primary_key=True)
 
-db.create_all()
+#---------------------------------FUNCTIONS---------------------------------
 
-if __name__ == '__main__':
-    app.run()
+@app.route('/')
+def opening():
+    print('opening')
+    return render_template('home.html')
+
+@app.route('/register_page', methods=['GET', 'POST'])
+def register_page():
+    return render_template('register.html')
+
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    if request.method == 'POST':
+        if False:
+            return render_template('register.html')
+
+        else:
+            email = request.form.get('email')
+            username = request.form.get('username')
+
+            email_exist = Customer.query.filter_by(cus_email=email).first()  # if this returns a user, then the email already exists in database
+            username_exist = CustomerLogin.query.filter_by(username=username).first()  # if this returns a user, then the username already exists in database
+
+            if email_exist or username_exist:  # if a user is found, we want to redirect back to signup page so user can try again
+                if email_exist:
+                    flash('This email belongs to another account')
+                    return render_template('customer_login.html')
+                else:
+                    flash('This username belongs to another account')
+                    return render_template('customer_login.html')
+
+            else:
+                if request.form.get('gender') == "male":
+                    cus_sex = False
+                else:
+                    cus_sex = True
+                cus_email = request.form.get('email')
+                cus_name = request.form.get('name')
+                cus_surname = request.form.get('surname')
+                cus_Birthdate = request.form.get('birthdate')
+                cus_telNo = request.form.get('telno')
+                username = request.form.get('username')
+                password = request.form.get('password')
+                cus_totalOrder = 0
+
+                cus = Customer(cus_sex,
+                               cus_email,
+                               cus_name,
+                               cus_surname,
+                               cus_Birthdate,
+                               cus_telNo,
+                               cus_totalOrder)
+
+                db.session.add(cus)
+                db.session.commit()
+
+                id = Customer.query.filter_by(cus_email=email).first().cus_id
+                cuslog = CustomerLogin(id, username, password)
+
+                db.session.add(cuslog)
+                db.session.commit()
+
+                return render_template('customer_login.html')
+
+@app.route('/customer_login')
+def customer_login():
+    return render_template('customer_login.html')
+
+@app.route('/customer_page', methods=['GET', 'POST'])
+def customer_page():
+    if request.method == 'POST':
+        if not request.form['username'] or not request.form['password']:
+            flash('Please enter all the fields', 'error')
+        else:
+            username = request.form.get('username')
+            password = request.form.get('password')
+
+            cuslog = CustomerLogin.query.filter_by(username=username, password=password).first()  # if this returns a user, then the email already exists in database
+
+            if cuslog:  # if a user is found, we want to redirect back to signup page so user can try again
+                cus = Customer.query.filter_by(cus_id=cuslog.customerID).first()
+                response = make_response(render_template('customer_page.html', customer = cus, customerlogin = cuslog))
+                response.set_cookie("cus_id", str(cus.cus_id))
+                response.set_cookie("cuslog_id", str(cuslog.customerID))
+                return response
+
+            else:
+                flash('Incorrect Email or Password')
+                return render_template('customer_login.html')
+    else:
+        print('error')
+
+@app.route('/admin_login')
+def admin_login():
+    return render_template('admin_login.html')
+
+@app.route('/admin_page', methods=['GET', 'POST'])
+def admin_page():
+    if request.method == 'POST':
+        if not request.form['username'] or not request.form['password']:
+            flash('Please enter all the fields', 'error')
+        else:
+            username = request.form.get('username')
+            password = request.form.get('password')
+
+            adminlog = AdminLogin.query.filter_by(username=username, password=password).first()  # if this returns a user, then the email already exists in database
+
+            if adminlog:  # if a user is found, we want to redirect back to signup page so user can try again
+                admin = Admin.query.filter_by(memberID=adminlog.adminId).first()
+                admin_emp = Employee.query.filter_by(memberID=admin.memberID).first()
+                response = make_response(render_template('admin_page.html', admin_emp = admin_emp, admin = admin, adminlog = adminlog))
+                response.set_cookie("emp_id", str(admin_emp.memberID))
+                response.set_cookie("admin_id", str(admin.memberID))
+                response.set_cookie("adminlog_id", str(adminlog.adminId))
+                return response
+            else:
+                flash('Incorrect Email or Password')
+                return render_template('admin_login.html')
+    else:
+        print('error')
+
+@app.route('/update_customer_info_page')
+def update_customer_info_page():
+    cus_id = int(request.cookies.get('cus_id'))
+    cuslog_id = int(request.cookies.get('cuslog_id'))
+    cus = Customer.query.filter_by(cus_id=cus_id).first()
+    cus_log = CustomerLogin.query.filter_by(customerID = cuslog_id).first()
+    response = make_response(render_template('update_customer_info.html', customer = cus, customerlogin = cus_log))
+    response.set_cookie("cus_id", str(cus_id))
+    response.set_cookie("cuslog_id", str(cuslog_id))
+
+    return response
+
+@app.route('/update_customer_info', methods=['GET', 'POST'])
+def update_customer_info():
+    cus_id = int(request.cookies.get('cus_id'))
+    cuslog_id = int(request.cookies.get('cuslog_id'))
+    cus = Customer.query.filter_by(cus_id=cus_id).first()
+    cus_log = CustomerLogin.query.filter_by(customerID=cuslog_id).first()
+
+    if request.method == 'POST':
+        if False:
+            response = make_response(render_template('customer_page.html', customer = cus, customerlogin = cus_log))
+            response.set_cookie("cus_id", str(cus_id))
+            response.set_cookie("cuslog_id", str(cuslog_id))
+            return response
+
+        else:
+            if request.form.get('gender') == "male":
+                cus.cus_sex = False
+            else:
+                 cus.cus_sex = True
+            cus.cus_email = request.form.get('email')
+            cus.cus_name = request.form.get('name')
+            cus.cus_surname = request.form.get('surname')
+            cus.cus_Birthdate = request.form.get('birthdate')
+            cus.cus_telNo = request.form.get('telno')
+            cus_log.username = request.form.get('username')
+            cus.log_password = request.form.get('password')
+
+            response = make_response(render_template('customer_page.html', customer = cus, customerlogin = cus_log))
+            response.set_cookie("cus_id", str(cus_id))
+            response.set_cookie("cuslog_id", str(cuslog_id))
+            return response
+
+@app.route('/add_new_employee_page')
+def add_new_employee_page():
+    emp_id = int(request.cookies.get('emp_id'))
+    admin_id = int(request.cookies.get('admin_id'))
+    adminlog_id = int(request.cookies.get('adminlog_id'))
+    admin = Admin.query.filter_by(memberID=admin_id).first()
+    admin_emp = Employee.query.filter_by(memberID=emp_id).first()
+    adminlog = AdminLogin.query.filter_by(adminId=adminlog_id).first()
+
+    response = make_response(render_template('add_new_employee.html', admin_emp = admin_emp, admin = admin, adminlog = adminlog))
+    response.set_cookie("emp_id", str(admin_emp.memberID))
+    response.set_cookie("admin_id", str(admin.memberID))
+    response.set_cookie("adminlog_id", str(adminlog.adminId))
+    return response
+
+@app.route('/add_new_employee', methods=['GET', 'POST'])
+def add_new_employee():
+    emp_id = int(request.cookies.get('emp_id'))
+    admin_id = int(request.cookies.get('admin_id'))
+    adminlog_id = int(request.cookies.get('adminlog_id'))
+    admin = Admin.query.filter_by(memberID=admin_id).first()
+    admin_emp = Employee.query.filter_by(memberID=emp_id).first()
+    adminlog = AdminLogin.query.filter_by(adminId=adminlog_id).first()
+
+    if request.method == 'POST':
+        if False:
+            response = make_response(render_template('admin_page.html', admin_emp=admin_emp, admin=admin, adminlog=adminlog))
+            response.set_cookie("emp_id", str(admin_emp.memberID))
+            response.set_cookie("admin_id", str(admin.memberID))
+            response.set_cookie("adminlog_id", str(adminlog.adminId))
+            return response
+
+        else:
+            name = request.form.get('name')
+            surname = request.form.get('surname')
+            address = request.form.get('address')
+            telNo = request.form.get('telno')
+            Birthdate = request.form.get('birthdate')
+            startDate = request.form.get('startdate')
+            salary = request.form.get('salary')
+            email = request.form.get('email')
+            Department = request.form.get('departmentid')
+            username = request.form.get('username')
+            password = request.form.get('password')
+
+            emp = Employee(name,
+                           surname,
+                           address,
+                           telNo,
+                           Birthdate,
+                           startDate,
+                           salary,
+                           email,
+                           Department)
+
+            db.session.add(emp)
+            db.session.commit()
+
+            id = Employee.query.filter_by(email=email).first().memberID
+            c_id = admin.C_id
+            emplog = EmployeeLogin(id, username, password)
+
+            db.session.add(emplog)
+            db.session.commit()
+
+            response = make_response(render_template('admin_page.html', admin_emp=admin_emp, admin=admin, adminlog=adminlog))
+            response.set_cookie("emp_id", str(admin_emp.memberID))
+            response.set_cookie("admin_id", str(admin.memberID))
+            response.set_cookie("adminlog_id", str(adminlog.adminId))
+            return response
+
+
+if __name__ == "__main__":
+    app.secret_key = 'super secret key'
+    app.config['SESSION_TYPE'] = 'filesystem'
+    db.create_all()
+    app.run(debug=True)
