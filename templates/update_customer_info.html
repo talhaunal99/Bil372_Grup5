@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Update Informations</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="{{url_for('static', filename='main.css')}}">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="wrapper">
+<div class="container" style="min-height:100% width:80%">
+  {% with messages = get_flashed_messages() %}
+    {% if messages %}
+      {% for message in messages %}
+        <div class="alert alert-warning alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+          {{message}}
+        </div>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+
+  {% block body %}{% endblock %}
+  </div>
+  <form class="form-signin_up" method="post" action="{{ '/update_customer_info' }}">
+    <h2 class="form-signin_up-heading">Update</h2>
+    <br></br>
+    <label for="gender">Gender:</label>
+    <select id="gender" name="gender">
+      <option value="male">Male</option>
+      <option value="female">Female</option>
+    </select>
+    <label>Email: </label>
+    <input type="email" class="form-control" name="email" placeholder="email"  value="{{ customer.cus_email }}" required="" autofocus="" />
+    <label>Name: </label>
+    <input type="text" class="form-control" name="name" placeholder="name"  value="{{ customer.cus_name }}" required=""  autofocus="" />
+    <label>Surname: </label>
+    <input type="text" class="form-control" name="surname" placeholder="surname"  value="{{ customer.cus_surname }}" required=""  autofocus="" />
+    <label>Birthdate: </label>
+    <input type="date" class="form-control" name="birthdate" placeholder="birthdate"  value="{{ customer.cus_Birthdate }}" required=""  autofocus="" />
+    <label>TelNo: </label>
+    <input type="tel" class="form-control" name="telno" placeholder="telno"  value="{{ customer.cus_telNo }}" required=""  autofocus="" />
+    <label>Username: </label>
+    <input type="text" class="form-control" name="username" placeholder="username"  value="{{ customerlogin.username }}" required=""  autofocus="" />
+    <label>Password: </label>
+    <input type="text" class="form-control" name="password" value="{{ customerlogin.password }}" required=""  autofocus="" />
+    <br></br>
+    <button class="btn btn-lg btn-primary btn-block" type="submit">Update</button>
+    <p></p>
+  </form>
+</div>
