@@ -172,7 +172,7 @@ class Perfume(db.Model):
 
 
 class MadePerfume(db.Model): #Normalization
-    __tablename__ = 'MadePerfume',
+    __tablename__ = 'MadePerfume'
     ProductId = db.Column(db.Integer,primary_key=True,autoincrement=True)
     made_by = db.Column(db.Integer,db.ForeignKey('Employee.memberID'))
 
