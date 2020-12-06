@@ -9,7 +9,7 @@ from model import Employee,Customer,CustomerLogin,Carrier,Chemist,Company,Conten
 @app.route('/')
 def opening():
     print('opening')
-    return render_template('home.html')
+    return render_template('Welcome.html')
 
 @app.route('/register_page', methods=['GET', 'POST'])
 def register_page():
