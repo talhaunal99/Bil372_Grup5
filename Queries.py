@@ -153,6 +153,11 @@ def employee_page():
                     response.set_cookie("emp_id", str(emp.emp_id))
                     response.set_cookie("emplog_id", str(emplog.employeeID))
                     response.set_cookie("emplog_type", str(emplog.type))
+                elif type == "supplier":
+                    response = make_response(render_template('supplier_page.html', employee=emp, employeelogin=emplog))
+                    response.set_cookie("emp_id", str(emp.emp_id))
+                    response.set_cookie("emplog_id", str(emplog.employeeID))
+                    response.set_cookie("emplog_type", str(emplog.type))
                 else:
                     response = make_response(render_template('employee_page.html', employee=emp, employeelogin=emplog))
                     response.set_cookie("emp_id", str(emp.emp_id))
@@ -243,19 +248,19 @@ def update_customer_info():
             if request.form.get('gender') == "male":
                 cus.cus_sex = False
             else:
-                 cus.cus_sex = True
-            cus.cus_email = request.form.get('email')
-            cus.cus_name = request.form.get('name')
-            cus.cus_surname = request.form.get('surname')
-            cus.cus_Birthdate = request.form.get('birthdate')
-            cus.cus_telNo = request.form.get('telno')
-            cus_log.username = request.form.get('username')
-            cus.log_password = request.form.get('password')
+                cus.cus_sex = True
+                cus.cus_email = request.form.get('email')
+                cus.cus_name = request.form.get('name')
+                cus.cus_surname = request.form.get('surname')
+                cus.cus_Birthdate = request.form.get('birthdate')
+                cus.cus_telNo = request.form.get('telno')
+                cus_log.username = request.form.get('username')
+                cus.log_password = request.form.get('password')
 
-            response = make_response(render_template('customer_page.html', customer = cus, customerlogin = cus_log))
-            response.set_cookie("cus_id", str(cus_id))
-            response.set_cookie("cuslog_id", str(cuslog_id))
-            return response
+                response = make_response(render_template('customer_page.html', customer = cus, customerlogin = cus_log))
+                response.set_cookie("cus_id", str(cus_id))
+                response.set_cookie("cuslog_id", str(cuslog_id))
+                return response
 
 @app.route('/add_new_employee_page')
 def add_new_employee_page():
