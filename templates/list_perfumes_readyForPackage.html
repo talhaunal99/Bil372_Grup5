@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<body>
+<table>
+         <thead>
+            <tr>
+               <th>Category </th>
+               <th>ProductID</th>
+               <th>Content</th>
+               <th>Price </th>
+               <th>Duration</th>
+               <th>NumberOfStock</th>
+            </tr>
+         </thead>
+
+         <tbody>
+            {% for prf in Perfume %}
+               <tr>
+                   <td>{{ prf.Category }}</td>
+                   <td>{{ prf.ProductID }}</td>
+                   <td>{{ prf.Content }}</td>
+                   <td>{{ prf.Price }}</td>
+                   <td>{{ prf.Duration }}</td>
+                   <td>{{ prf.NumberOfStock }}</td>
+            {% endfor %}
+         </tbody>
+      </table>
+</body>
+</html>
