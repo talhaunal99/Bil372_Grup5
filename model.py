@@ -550,19 +550,20 @@ def employee_login():
 @app.route('/employee_page', methods=['GET', 'POST']) # Type'a gore degisiklikler yapilmasi gerek.
 def employee_page():
     if request.method == 'POST':
-        if not request.form['username'] or not request.form['password']:
+        if not request.form['username'] or not request.form['password'] or not request.form['type']:
             flash('Please enter all the fields', 'error')
         else:
             username = request.form.get('username')
             password = request.form.get('password')
-
-            emplog = EmployeeLogin.query.filter_by(username=username, password=password).first()  # if this returns a user, then the email already exists in database
+            type = request.form.get('type')
+            emplog = EmployeeLogin.query.filter_by(username=username, password=password, type=type).first()  # if this returns a user, then the email already exists in database
 
             if emplog:  # if a user is found, we want to redirect back to signup page so user can try again
                 emp = Employee.query.filter_by(emp_id=emplog.employeeID).first()
                 response = make_response(render_template('employee_page.html', employee = emp, employeelogin = emplog))
                 response.set_cookie("emp_id", str(emp.emp_id))
                 response.set_cookie("emplog_id", str(emplog.employeeID))
+                response.set_cookie("emplog_type", str(emplog.type))
                 return response
 
             else:
