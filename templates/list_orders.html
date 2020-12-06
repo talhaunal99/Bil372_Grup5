@@ -7,15 +7,17 @@
                <th>order_no </th>
                <th>customer_id</th>
                <th>carrier_id</th>
+               <th>order_date</th>
             </tr>
          </thead>
 
          <tbody>
-            {% for ord in Order %}
+            {% for ord in Order and OrderDate%}
                <tr>
                    <td>{{ ord.order_no }}</td>
                    <td>{{ ord.customer_id }}</td>
                    <td>{{ ord.carrier_id }}</td>
+                   <td>{{ ord.order_date }}</td>
             {% endfor %}
          </tbody>
       </table>
