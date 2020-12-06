@@ -335,6 +335,11 @@ def add_new_employee():
             response.set_cookie("adminlog_id", str(adminlog.adminId))
             return response
 
+@app.route('/list_employees')
+def list_employees():
+    response = make_response(render_template('list_employees.html', Employee=Employee.query.all()))
+    return response
+
 if __name__ == "__main__":
     app.secret_key = 'super secret key'
     app.config['SESSION_TYPE'] = 'filesystem'
