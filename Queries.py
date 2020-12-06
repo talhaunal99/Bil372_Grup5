@@ -347,12 +347,17 @@ def list_vehicles():
 
 @app.route('/list_orders')
 def list_orders():
-    response = make_response(render_template('list_orders.html', Order=Order.query.all()))
+    response = make_response(render_template('list_orders.html', Order=Order.query.all(), OrderDate=OrderDate.query.all()))
     return response
 
 @app.route('/list_orders_forCarriers')
 def list_orders_forCarriers():
-    response = make_response(render_template('list_orders_forCarriers.html', Order=Order.query.all()))
+    response = make_response(render_template('list_orders_forCarriers.html', Order=Order.query.all(), OrderDate=OrderDate.query.all()))
+    return response
+
+@app.route('/list_perfumes_readyForPackage')
+def list_perfumes_readyForPackage():
+    response = make_response(render_template('list_perfumes_readyForPackage.html', Perfume=Perfume.query.all()))
     return response
 
 if __name__ == "__main__":
