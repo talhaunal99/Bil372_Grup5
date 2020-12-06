@@ -25,7 +25,7 @@
 
   {% block body %}{% endblock %}
   </div>
-  <form class="form-signin_up" method="post" action="{{ '/customer_page' }}">
+  <form class="form-signin_up" method="post" action="{{ '/register' }}">
     <h2 class="form-signin_up-heading">Register</h2>
     <br></br>
     <label for="gender">Gender:</label>
@@ -43,12 +43,14 @@
     <input type="date" class="form-control" name="birthdate" required="" autofocus="" />
     <label>TelNo: </label>
     <input type="tel" class="form-control" name="telno" required="" autofocus="" />
+    <label>Address: </label>
+    <input type="textarea" class="form-control" name="address" required="" autofocus="" />
     <label>Username: </label>
     <input type="text" class="form-control" name="username" required="" autofocus="" />
     <label>Password: </label>
     <input type="password" class="form-control" name="password" required="" autofocus="" />
     <br></br>
-    <button class="btn btn-lg btn-primary btn-block" type="submit">Update</button>
+    <button class="btn btn-lg btn-primary btn-block" type="submit">Register</button>
     <p></p>
   </form>
 </div>
