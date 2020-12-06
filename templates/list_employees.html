@@ -1,8 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
+<head>
+    <style>
+        table, th, td {
+            margin-top: -11%;
+            margin-left: 55%;
+            border: 1px solid black;
+            text-align: center;
+            border-collapse: collapse;
+            padding: 7px;
+            background-color: brown;
+            color: black;
+            font-size: 1.1em;
+            font-weight: bold;
+            font-family: cursive;
+        }
+        </style>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Customers</title>
+    <link rel="stylesheet" href="/static/style.css" />
+</head>
 <body>
-<table>
-         <thead>
+    <table>
             <tr>
                <th>memberID </th>
                <th>name</th>
@@ -15,9 +35,9 @@
                <th>email</th>
                <th>department_id</th>
             </tr>
-         </thead>
 
-         <tbody>
+
+
             {% for emp in Employee %}
                <tr>
                    <td>{{ emp.memberID }}</td>
@@ -32,7 +52,7 @@
                    <td>{{ emp.department_id }}</td>
                </tr>
             {% endfor %}
-         </tbody>
+
       </table>
 </body>
 </html>
