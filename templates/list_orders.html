@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<body>
+<table>
+         <thead>
+            <tr>
+               <th>order_no </th>
+               <th>customer_id</th>
+               <th>carrier_id</th>
+            </tr>
+         </thead>
+
+         <tbody>
+            {% for ord in Order %}
+               <tr>
+                   <td>{{ ord.order_no }}</td>
+                   <td>{{ ord.customer_id }}</td>
+                   <td>{{ ord.carrier_id }}</td>
+            {% endfor %}
+         </tbody>
+      </table>
+</body>
+</html>
