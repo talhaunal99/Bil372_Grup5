@@ -1,0 +1,21 @@
+﻿Category,ProductID,Content,Price,Duration,NumberOfStock
+Floral,1,Ambergris-Benzoin,15,200,20
+Floral,2,Ylang Ylang,13.95,200,20
+Floral,3,Tuberose,10,200,20
+Floral,4,Orris-Benzoin,12,200,20
+Floral,5,Ambergis-Oakmuss,98.5,200,20
+Fruity,6,Ambergris-Ylang Ylang,25,200,20
+Fruity,7,Hedoine-Tonka Bean,9.95,200,20
+Fruity,8,Hedoine-Osmanthus,19.95,200,20
+Fruity,9,Tuberose,29.85,200,20
+Oriental,10,Ambergris-Ambrette,13.5,200,20
+Oriental,11,Ambergris-Ylang Ylang,35.49,200,20
+Oriental,12,Tonka Bean,25.6,200,20
+Oriental,13,Sandalwood,9.95,200,20
+Spicy,14,Vanilla-Citron,30.95,200,20
+Spicy,15,Orris,25.4,200,20
+Spicy,16,Oakmuss-Hedione,9.95,200,20
+Spicy,17,Jasmine-Tonka Bean,15.95,200,20
+Woody,18,Benzoin-Tonka Bean,35.5,200,20
+Woody,19,Benzoin-Ylang Ylang,21.5,200,20
+Woody,20,Jasmine-Ambergris,23.45,200,20

@@ -1,0 +1,6 @@
+﻿vehicle_id,licence,kilometer,first_price,last_price,vehicle_type
+1,34AAB23,15,13000,12925,Motorcycle
+2,34AAB24,15,25000,24925,Truck
+3,34AAB25,15,30000,29925,Car
+4,34AAB26,15,30000,29925,Car
+5,34AAB27,15,30000,29925,Car
