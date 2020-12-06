@@ -345,6 +345,10 @@ def list_vehicles():
     response = make_response(render_template('list_vehicles.html', VehicleFeatures=VehicleFeatures.query.all()))
     return response
 
+@app.route('/list_orders')
+def list_orders():
+    response = make_response(render_template('list_orders.html', Order=Order.query.all()))
+    return response
 
 if __name__ == "__main__":
     app.secret_key = 'super secret key'
