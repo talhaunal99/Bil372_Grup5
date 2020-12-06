@@ -251,18 +251,20 @@ def update_customer_info():
                 cus.cus_sex = False
             else:
                 cus.cus_sex = True
-                cus.cus_email = request.form.get('email')
-                cus.cus_name = request.form.get('name')
-                cus.cus_surname = request.form.get('surname')
-                cus.cus_Birthdate = request.form.get('birthdate')
-                cus.cus_telNo = request.form.get('telno')
-                cus_log.username = request.form.get('username')
-                cus.log_password = request.form.get('password')
+                
+            cus.cus_email = request.form.get('email')
+            cus.cus_name = request.form.get('name')
+            cus.cus_surname = request.form.get('surname')
+            cus.cus_Birthdate = request.form.get('birthdate')
+            cus.cus_telNo = request.form.get('telno')
+            cus.cus_address = request.form.get('address')
+            cus_log.username = request.form.get('username')
+            cus.log_password = request.form.get('password')
 
-                response = make_response(render_template('Profile.html', customer = cus, customerlogin = cus_log))
-                response.set_cookie("cus_id", str(cus_id))
-                response.set_cookie("cuslog_id", str(cuslog_id))
-                return response
+            response = make_response(render_template('Profile.html', customer = cus, customerlogin = cus_log))
+            response.set_cookie("cus_id", str(cus_id))
+            response.set_cookie("cuslog_id", str(cuslog_id))
+            return response
 
 @app.route('/add_new_employee_page')
 def add_new_employee_page():
