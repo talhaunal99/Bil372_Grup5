@@ -369,6 +369,36 @@ def list_customers():
     response = make_response(render_template('list_customers.html', Customer=Customer.query.all()))
     return response
 
+@app.route('/about_us')
+def about_us():
+    return render_template('AboutUs.html')
+
+@app.route('/profile')
+def profile():
+    cus_id = int(request.cookies.get('cus_id'))
+    cuslog_id = int(request.cookies.get('cuslog_id'))
+    cus = Customer.query.filter_by(cus_id=cus_id).first()
+    cus_log = CustomerLogin.query.filter_by(customerID = cuslog_id).first()
+    if cus.cus_sex == True:
+        gender = "Female"
+    else:
+        gender = "Male"
+    response = make_response(render_template('Profile.html', customer = cus, customerlogin = cus_log, content = gender))
+    response.set_cookie("cus_id", str(cus_id))
+    response.set_cookie("cuslog_id", str(cuslog_id))
+    return response
+
+@app.route('/main_page')
+def main_page():
+    cus_id = int(request.cookies.get('cus_id'))
+    cuslog_id = int(request.cookies.get('cuslog_id'))
+    cus = Customer.query.filter_by(cus_id=cus_id).first()
+    cus_log = CustomerLogin.query.filter_by(customerID = cuslog_id).first()
+    response = make_response(render_template('Main-Page.html', customer = cus, customerlogin = cus_log))
+    response.set_cookie("cus_id", str(cus_id))
+    response.set_cookie("cuslog_id", str(cuslog_id))
+    return response
+
 if __name__ == "__main__":
     app.secret_key = 'super secret key'
     app.config['SESSION_TYPE'] = 'filesystem'
