@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<body>
+<table>
+         <thead>
+            <tr>
+               <th>memberID </th>
+               <th>name</th>
+               <th>surname</th>
+               <th>address</th>
+               <th>telNo</th>
+               <th>Birthdate</th>
+               <th>startDate</th>
+               <th>salary</th>
+               <th>email</th>
+               <th>department_id</th>
+            </tr>
+         </thead>
+
+         <tbody>
+            {% for emp in Employee %}
+               <tr>
+                   <td>{{ emp.memberID }}</td>
+                   <td>{{ emp.name }}</td>
+                   <td>{{ emp.surname }}</td>
+                   <td>{{ emp.address }}</td>
+                   <td>{{ emp.telNo }}</td>
+                   <td>{{ emp.Birthdate }}</td>
+                   <td>{{ emp.startDate }}</td>
+                   <td>{{ emp.salary }}</td>
+                   <td>{{ emp.email }}</td>
+                   <td>{{ emp.department_id }}</td>
+               </tr>
+            {% endfor %}
+         </tbody>
+      </table>
+</body>
+</html>
