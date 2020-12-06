@@ -4,7 +4,7 @@ from flask_migrate import Migrate
 import datetime
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI']='postgresql://postgres:test@localhost/Perfume Database'
+app.config['SQLALCHEMY_DATABASE_URI']='postgresql://postgres:password@localhost/Perfume Database'
 app.config['SQLALCHEMY_ECHO'] = False
 db = SQLAlchemy(app)
 
@@ -181,15 +181,13 @@ class Department(db.Model):
     dep_TelNo=db.Column(db.String(40))
     dep_name=db.Column(db.String(40))
     department_id=db.Column(db.Integer,primary_key=True,autoincrement=True)
-    salary = db.Column(db.Integer)
     c_id= db.Column(db.Integer,db.ForeignKey('Company.C_id'))
 
-    def __init__(self, dep_address, dep_TelNo, dep_name, department_id, salary, c_id):
+    def __init__(self, dep_address, dep_TelNo, dep_name, department_id, c_id):
         self.dep_address = dep_address
         self.dep_TelNo = dep_TelNo
         self.dep_name = dep_name
         self.department_id = department_id
-        self.salary = salary
         self.c_id = c_id
 
 class Confirms(db.Model):
