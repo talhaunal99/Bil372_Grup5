@@ -46,6 +46,7 @@ def register():
                 cus_surname = request.form.get('surname')
                 cus_Birthdate = request.form.get('birthdate')
                 cus_telNo = request.form.get('telno')
+                cus_address = request.form.get('address')
                 username = request.form.get('username')
                 password = request.form.get('password')
                 cus_totalOrder = 0
@@ -56,7 +57,8 @@ def register():
                                cus_surname,
                                cus_Birthdate,
                                cus_telNo,
-                               cus_totalOrder)
+                               cus_totalOrder,
+                               cus_address)
 
                 db.session.add(cus)
                 db.session.commit()
@@ -86,7 +88,7 @@ def customer_page():
 
             if cuslog:  # if a user is found, we want to redirect back to signup page so user can try again
                 cus = Customer.query.filter_by(cus_id=cuslog.customerID).first()
-                response = make_response(render_template('customer_page.html', customer = cus, customerlogin = cuslog))
+                response = make_response(render_template('Main-Page.html', customer = cus, customerlogin = cuslog))
                 response.set_cookie("cus_id", str(cus.cus_id))
                 response.set_cookie("cuslog_id", str(cuslog.customerID))
                 return response
