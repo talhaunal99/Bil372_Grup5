@@ -2,6 +2,11 @@ from flask_sqlalchemy import SQLAlchemy
 from flask import Flask, request, flash, url_for, redirect, render_template, make_response
 from flask_migrate import Migrate
 import datetime
+from sqlathanor import declarative_base, as_declarative
+from sqlathanor import Column
+from sqlathanor import relationship
+from sqlathanor import FlaskBaseModel, initialize_flask_sqlathanor
+
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI']='postgresql://postgres:password@localhost/Perfume Database'
@@ -153,7 +158,7 @@ class Perfume(db.Model):
     Category = db.Column(db.String(20))
     ProductID=db.Column(db.Integer,primary_key=True,autoincrement=True)
     Content=db.Column(db.String(40))
-    Price=db.Column(db.Integer)
+    Price=db.Column(db.Float)
     Duration = db.Column(db.Integer)
     NumberOfStock= db.Column(db.Integer)
 

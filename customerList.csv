@@ -1,0 +1,6 @@
+﻿cus_id,cus_sex,cus_email,cus_name,cus_surname,cus_Birthdate,cus_telNo,cus_totalOrder,cus_address
+1,True,ysmndmrts@gmail.com,Yasemin,Demirtas,1999-12-24,5328483297,5,2952  Stadium Drive
+2,True,frknorten@gmail.com,Furkan,Orten,1997-06-15,2314832094,2,24  Driftwood Road
+3,False,tlhaunal@gmail.com,Talha,Unal,1995-06-21,3849475930,1,2344  Masonic Hill Road
+4,False,btknsmlldn@gmail.com,Batıkan,Sumluludan,1996-04-19,2748404027,0,4171  Delaware Avenue
+5,True,teresa@gmail.com,Teresa,Colour,1991-05-25,3272493937,3,1929  Hickory Ridge Drive
