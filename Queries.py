@@ -241,7 +241,7 @@ def update_customer_info():
 
     if request.method == 'POST':
         if False:
-            response = make_response(render_template('customer_page.html', customer = cus, customerlogin = cus_log))
+            response = make_response(render_template('Profile.html', customer = cus, customerlogin = cus_log))
             response.set_cookie("cus_id", str(cus_id))
             response.set_cookie("cuslog_id", str(cuslog_id))
             return response
@@ -259,7 +259,7 @@ def update_customer_info():
                 cus_log.username = request.form.get('username')
                 cus.log_password = request.form.get('password')
 
-                response = make_response(render_template('customer_page.html', customer = cus, customerlogin = cus_log))
+                response = make_response(render_template('Profile.html', customer = cus, customerlogin = cus_log))
                 response.set_cookie("cus_id", str(cus_id))
                 response.set_cookie("cuslog_id", str(cuslog_id))
                 return response
