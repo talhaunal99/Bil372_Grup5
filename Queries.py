@@ -360,6 +360,11 @@ def list_perfumes_readyForPackage():
     response = make_response(render_template('list_perfumes_readyForPackage.html', Perfume=Perfume.query.all()))
     return response
 
+@app.route('/list_customers')
+def list_customers():
+    response = make_response(render_template('list_customers.html', Customer=Customer.query.all()))
+    return response
+
 if __name__ == "__main__":
     app.secret_key = 'super secret key'
     app.config['SESSION_TYPE'] = 'filesystem'
