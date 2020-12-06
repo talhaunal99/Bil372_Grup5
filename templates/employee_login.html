@@ -32,11 +32,15 @@
     <label></label>
     <input type="password" class="form-control" name="password" placeholder="Password" required=""/>
 
-    Choose an Employee Role<SELECT name="type">
-    {% for c in EmployeeLogin %}
-	<OPTION value={{c.employeeID}}>{{c.type}}</option>
-    {% endfor %}
-    </SELECT>
+    <label for="type">Employee Role:</label>
+    <select id="gender" name="gender">
+      <option value="chemist">Chemist</option>
+      <option value="carrier">Carrier</option>
+      <option value="analyst">Analyst</option>
+      <option value="customer_service">Customer Service</option>
+      <option value="supplier">Accountant</option>
+      <option value="worker">Worker</option>
+    </select>
 
     <label></label>
     <button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>
