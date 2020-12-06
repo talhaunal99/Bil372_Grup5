@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<body>
+<table>
+         <thead>
+            <tr>
+               <th>vehicle_id </th>
+               <th>licence</th>
+               <th>kilometer</th>
+               <th>first_price</th>
+               <th>last_price</th>
+               <th>vehicle_type</th>
+            </tr>
+         </thead>
+
+         <tbody>
+            {% for vhc in VehicleFeatures %}
+               <tr>
+                   <td>{{ vhc.vehicle_id }}</td>
+                   <td>{{ vhc.licence }}</td>
+                   <td>{{ vhc.kilometer }}</td>
+                   <td>{{ vhc.first_price }}</td>
+                   <td>{{ vhc.last_price }}</td>
+                   <td>{{ vhc.vehicle_type }}</td>
+               </tr>
+            {% endfor %}
+         </tbody>
+      </table>
+</body>
+</html>
