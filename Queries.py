@@ -117,7 +117,7 @@ def admin_page():
             if adminlog:  # if a user is found, we want to redirect back to signup page so user can try again
                 admin = Admin.query.filter_by(memberID=adminlog.adminId).first()
                 admin_emp = Employee.query.filter_by(memberID=admin.memberID).first()
-                response = make_response(render_template('admin_page.html', admin_emp = admin_emp, admin = admin, adminlog = adminlog))
+                response = make_response(render_template('AdminHomePage.html', admin_emp = admin_emp, admin = admin, adminlog = adminlog))
                 response.set_cookie("emp_id", str(admin_emp.memberID))
                 response.set_cookie("admin_id", str(admin.memberID))
                 response.set_cookie("adminlog_id", str(adminlog.adminId))
