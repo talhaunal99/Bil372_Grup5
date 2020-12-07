@@ -26,11 +26,17 @@
                <th>order_date</th>
             </tr>
 
-            {% for ord in Order and OrderDate%}
+            {% for ord in Order %}
+                {% for ord_d in OrderDate %}
+                    {% if ord.order_no == ord_d.order_no%}
+                        {% if ord.carrier_id==emp_id%}
                <tr>
                    <td>{{ ord.order_no }}</td>
                    <td>{{ ord.customer_id }}</td>
-                   <td>{{ ord.order_date }}</td>
+                   <td>{{ ord_d.order_date }}</td>
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
             {% endfor %}
       </table>
 </body>

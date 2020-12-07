@@ -366,7 +366,8 @@ def list_orders():
 
 @app.route('/list_orders_forCarriers')
 def list_orders_forCarriers():
-    response = make_response(render_template('list_orders_forCarriers.html', Order=Order.query.all(), OrderDate=OrderDate.query.all()))
+    emp_id = int(request.cookies.get('emp_id'))
+    response = make_response(render_template('list_orders_forCarriers.html', emp_id=emp_id, Order=Order.query.all(), OrderDate=OrderDate.query.all()))
     return response
 
 @app.route('/list_perfumes_readyForPackage')
