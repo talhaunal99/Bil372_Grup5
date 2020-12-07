@@ -2,10 +2,6 @@ from flask_sqlalchemy import SQLAlchemy
 from flask import Flask, request, flash, url_for, redirect, render_template, make_response
 from flask_migrate import Migrate
 import datetime
-from sqlathanor import declarative_base, as_declarative
-from sqlathanor import Column
-from sqlathanor import relationship
-from sqlathanor import FlaskBaseModel, initialize_flask_sqlathanor
 
 
 app = Flask(__name__)
@@ -17,13 +13,13 @@ class Customer(db.Model):
     __tablename__ = 'customer'
     cus_id = db.Column(db.Integer, primary_key=True, autoincrement=True,unique=True)
     cus_sex=db.Column(db.Boolean)
-    cus_email=db.Column(db.String(80), unique=True)
+    cus_email=db.Column(db.String, unique=True)
     cus_name = db.Column(db.String(80))
     cus_surname = db.Column(db.String(80))
     cus_Birthdate = db.Column(db.DateTime)
     cus_telNo=db.Column(db.String)
     cus_totalOrder=db.Column(db.Integer)
-    cus_address = db.Column(db.String(200))
+    cus_address = db.Column(db.String)
 
     def __init__(self, cus_sex, cus_email, cus_name, cus_surname, cus_Birthdate, cus_telNo, cus_totalOrder, cus_address):
         self.cus_sex = cus_sex
@@ -155,9 +151,9 @@ class VehicleFeatures(db.Model): #Normalization
 
 class Perfume(db.Model):
     __tablename__ = 'Perfume'
-    Category = db.Column(db.String(20))
+    Category = db.Column(db.String)
     ProductID=db.Column(db.Integer,primary_key=True,autoincrement=True)
-    Content=db.Column(db.String(40))
+    Content=db.Column(db.String)
     Price=db.Column(db.Float)
     Duration = db.Column(db.Integer)
     NumberOfStock= db.Column(db.Integer)
@@ -182,9 +178,9 @@ class MadePerfume(db.Model): #Normalization
 
 class Department(db.Model):
     __tablename__ = 'Department'
-    dep_address = db.Column(db.String(20))
-    dep_TelNo=db.Column(db.String(40))
-    dep_name=db.Column(db.String(40))
+    dep_address = db.Column(db.String)
+    dep_TelNo=db.Column(db.String)
+    dep_name=db.Column(db.String)
     department_id=db.Column(db.Integer,primary_key=True,autoincrement=True)
     c_id= db.Column(db.Integer,db.ForeignKey('Company.C_id'))
 
@@ -260,10 +256,10 @@ class ProductQuantity(db.Model): #Normalization
 class Company(db.Model):
     __tablename__ = 'Company'
     C_id = db.Column(db.Integer, primary_key = True,autoincrement=True)
-    Name = db.Column(db.String(80))
+    Name = db.Column(db.String)
     Budget = db.Column(db.Integer)
-    Address = db.Column(db.String(200))
-    TelNo = db.Column(db.String(11))
+    Address = db.Column(db.String)
+    TelNo = db.Column(db.String)
 
     def __init__(self, C_id, Name, Budget, Address, TelNo):
         self.C_id = C_id
@@ -308,14 +304,14 @@ class Material(db.Model):
 class Employee(db.Model):
     __tablename__ = 'Employee'
     memberID = db.Column(db.Integer, primary_key=True,autoincrement=True,unique=True)
-    name = db.Column(db.String(30))
-    surname = db.Column(db.String(30))
-    address = db.Column(db.String(200))
-    telNo = db.Column(db.String(11))
+    name = db.Column(db.String)
+    surname = db.Column(db.String)
+    address = db.Column(db.String)
+    telNo = db.Column(db.String)
     Birthdate = db.Column(db.DateTime)
     startDate = db.Column(db.DateTime)
     salary = db.Column(db.Integer)
-    email = db.Column(db.String(80))
+    email = db.Column(db.String)
     department_id=db.Column(db.Integer,db.ForeignKey('Department.department_id'), primary_key = True)
 
     def __init__(self, name, surname, address, telNo, Birthdate, startDate, salary, email, department_id):
@@ -377,7 +373,7 @@ class Admin(db.Model):
 class Analyst(db.Model):
     __tablename__ = 'Analyst'
     memberID = db.Column(db.Integer, db.ForeignKey('Employee.memberID'),primary_key=True)
-    method=db.Column(db.String(40))
+    method=db.Column(db.String)
 
     def __init__(self, memberID, method):
         self.memberID = memberID

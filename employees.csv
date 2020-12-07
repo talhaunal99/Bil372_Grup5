@@ -1,51 +1,51 @@
-﻿memberID,name,surname,address,telNo,Birthdate,startDate,salary,email,department_id,
-0,Talha,Orten,"3682  Junior Avenue",404-656-6702,1999-02-15,15000,talhaorten@yahoo.com,,1
+﻿memberID,name,surname,address,telNo,Birthdate,startDate,salary,email,department_id
+0,Talha,Orten,"3682  Junior Avenue",404-656-6702,1999-02-15,2000-05-12,15000,talhaorten@yahoo.com,1
 1,Hans,Frey,"304 Pilgrim Ave.
-Rocklin, CA 95677",(906) 781-1924,1963-08-17,2000-02-15,1500,jeteve@yahoo.com,,1
+Rocklin, CA 95677",(906) 781-1924,1963-08-17,2000-02-15,1500,jeteve@yahoo.com,1
 2,Kristin,Hicks,"804 North Longfellow St.
-Cookeville, TN 38501",(800) 397-8193,1968-06-18,2007-06-21,1500,peterhoeg@live.com,,1
+Cookeville, TN 38501",(800) 397-8193,1968-06-18,2007-06-21,1500,peterhoeg@live.com,1
 3,Trish,Rivas,"762 Border St.
-Harrison Township, MI 48045",(813) 412-2836,1987-07-30,2013-09-09,1500,intlprog@hotmail.com,,1
+Harrison Township, MI 48045",(813) 412-2836,1987-07-30,2013-09-09,1500,intlprog@hotmail.com,1
 4,Deadra,Gardner,"175 Swanson Lane
-Olive Branch, MS 38654",(212) 211-8506,1965-07-11,2017-08-30,2000,paulv@gmail.com,,2
+Olive Branch, MS 38654",(212) 211-8506,1965-07-11,2017-08-30,2000,paulv@gmail.com,2
 5,Jules,Werner,"71 Rockville Road
-Tucson, AZ 85718",(212) 999-7146,1976-11-17,2013-05-25,2000,jwarren@live.com,,2
+Tucson, AZ 85718",(212) 999-7146,1976-11-17,2013-05-25,2000,jwarren@live.com,2
 6,Barb,Vaughan,"9884 Valley View Rd.
-Sun Prairie, WI 53590",(918) 293-9899,1995-12-29,2005-02-21,2000,trygstad@aol.com,,2
+Sun Prairie, WI 53590",(918) 293-9899,1995-12-29,2005-02-21,2000,trygstad@aol.com,2
 7,Marth,Peterson,"v738 Windsor St.
-Savannah, GA 3140",(930) 974-4869,1996-12-06,2013-02-26,2500,kourai@gmail.com,,2
+Savannah, GA 3140",(930) 974-4869,1996-12-06,2013-02-26,2500,kourai@gmail.com,2
 8,Vincent,Carson,"99 Saxon Rd.
-Mays Landing, NJ 08330",(999) 756-8550,1998-03-26,2008-04-17,2500,naoya@comcast.net,,3
+Mays Landing, NJ 08330",(999) 756-8550,1998-03-26,2008-04-17,2500,naoya@comcast.net,3
 9,Rusty,Lara,"904 Ridge Street
-Massapequa Park, NY 11762",(939) 835-1960,1996-12-06,2013-01-20,2500,brbarret@att.net,,3
+Massapequa Park, NY 11762",(939) 835-1960,1996-12-06,2013-01-20,2500,brbarret@att.net,3
 10,Cordell,Mccoy,"76 Miller Street
-West Palm Beach, FL 33404",(566) 823-7255,1981-03-11,2011-01-24,3000,tromey@comcast.net,,3
+West Palm Beach, FL 33404",(566) 823-7255,1981-03-11,2011-01-24,3000,tromey@comcast.net,3
 11,Ward,Rogers,"23 Corona Lane
-Coachella, CA 92236",(597) 416-1646,1980-06-21,2008-04-24,3000,sopwith@msn.com,,4
+Coachella, CA 92236",(597) 416-1646,1980-06-21,2008-04-24,3000,sopwith@msn.com,4
 12,Ed,Small,"8540 Ridgewood Lane
-East Northport, NY 11731",(996) 877-7108,1991-06-17,2000-08-04,3000,gtaylor@aol.com,,4
+East Northport, NY 11731",(996) 877-7108,1991-06-17,2000-08-04,3000,gtaylor@aol.com,4
 13,Tomas,Mejia,"53 SW. Elm St.
-Schenectady, NY 12302",(837) 426-6069,1969-04-30,2003-07-19,3500,whimsy@sbcglobal.net,,4
+Schenectady, NY 12302",(837) 426-6069,1969-04-30,2003-07-19,3500,whimsy@sbcglobal.net,4
 14,Katy,Johnson,"441 W. North St.
-Glenside, PA 19038",(210) 303-0449,1988-04-18,2006-09-08,3500,karasik@gmail.com,,5
+Glenside, PA 19038",(210) 303-0449,1988-04-18,2006-09-08,3500,karasik@gmail.com,5
 15,Argentina,Mcclure,"552 San Carlos Ave.
-Hallandale, FL 33009",(623) 298-5178,1964-08-02,2003-05-16,3500,birddog@aol.com,,5
+Hallandale, FL 33009",(623) 298-5178,1964-08-02,2003-05-16,3500,birddog@aol.com,5
 16,Fredricka,Dunlap,"310 Gartner St.
-Romeoville, IL 60446",(390) 521-3349,1969-07-13,2017-03-09,4000,karasik@comcast.net,,5
+Romeoville, IL 60446",(390) 521-3349,1969-07-13,2017-03-09,4000,karasik@comcast.net,5
 17,Charmain,Hebert,"63 Rockland St.
-Staten Island, NY 10301",(267) 216-1365,1987-09-14,2019-11-01,4000,maikelnai@msn.com,,6
+Staten Island, NY 10301",(267) 216-1365,1987-09-14,2019-11-01,4000,maikelnai@msn.com,6
 18,Errol,Cain,"7353 Annadale Drive
-West Springfield, MA 01089",(897) 512-3009,1960-05-17,2000-05-13,4000,stomv@comcast.net,,6
+West Springfield, MA 01089",(897) 512-3009,1960-05-17,2000-05-13,4000,stomv@comcast.net,6
 19,Kathrin,Townsend,"8865 Virginia Court
-Anoka, MN 55303",(299) 918-7322,1967-11-02,2020-10-09,4500,podmaster@aol.com,,6
+Anoka, MN 55303",(299) 918-7322,1967-11-02,2020-10-09,4500,podmaster@aol.com,6
 20,Ted,Francis,"8938 Argyle Street
-Bayside, NY 11361",(828) 919-2997,1995-06-09,2017-05-01,4500,jcholewa@hotmail.com,,7
+Bayside, NY 11361",(828) 919-2997,1995-06-09,2017-05-01,4500,jcholewa@hotmail.com,7
 21,Sondra,Holmes,"4 Birchpond St.
-Morrisville, PA 19067",(858) 594-3971,1968-06-01,2007-09-12,4500,elmer@live.com,,7
+Morrisville, PA 19067",(858) 594-3971,1968-06-01,2007-09-12,4500,elmer@live.com,7
 22,Elvera,Wilson,"816 Euclid Dr.
-Prattville, AL 36067",(728) 266-5310,1968-08-18,2000-05-13,5000,podmaster@optonline.net,,7
+Prattville, AL 36067",(728) 266-5310,1968-08-18,2000-05-13,5000,podmaster@optonline.net,7
 23,Heath,Rich,"89 Marconi Rd.
-Hopkinsville, KY 42240",(694) 770-1344,1992-03-30,2015-12-26,5000,wortmanj@gmail.com,,8
+Hopkinsville, KY 42240",(694) 770-1344,1992-03-30,2015-12-26,5000,wortmanj@gmail.com,8
 24,Yung,Delacruz,"647 Beech Lane
-Niagara Falls, NY 14304",(297) 765-4488,1991-07-20,2007-09-12,5000,gomor@yahoo.com,,8
-,,,,,,,,,,
+Niagara Falls, NY 14304",(297) 765-4488,1991-07-20,2007-09-12,5000,gomor@yahoo.com,8
+

@@ -1,4 +1,4 @@
-dep_address,dep_telNo,dep_name,department_id,c_id
+dep_address,dep_TelNo,dep_name,department_id,c_id
 2048 Hill Street Defiance,860-524-4313,Chemistry Department,1,1
 4279 Tenmile San Diego,603-657-9543,Delivery Department,2,1
 1455 Bolman Court Mattoon,615-310-3454,Management Department,3,1

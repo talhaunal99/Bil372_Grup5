@@ -1,5 +1,5 @@
-memberID,drivingLicenceType,vehicle_id
-4,B,1
-5,A,2
-6,B,3
-7,B,4
+memberID,drivingLicenceType
+4,B
+5,A
+6,B
+7,B
