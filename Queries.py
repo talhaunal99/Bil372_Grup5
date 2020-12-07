@@ -438,6 +438,20 @@ def make_perfume():
     response.set_cookie("emplog_type", str(emplog.type))
     return response
 
+@app.route('/items')
+def items():
+    emp_id = int(request.cookies.get("emp_id"))
+    emplog_id = int(request.cookies.get("emplog_id"))
+    emp = Employee.query.filter_by(memberID = emp_id).first()
+    emplog = EmployeeLogin.query.filter_by(employeeID = emplog_id).first()
+    print(emplog_id)
+    print(emplog.type)
+    response = make_response(render_template('Items.html', employee=emp, employeelogin=emplog))
+    response.set_cookie("emp_id", str(emp_id))
+    response.set_cookie("emplog_id", str(emplog_id))
+    response.set_cookie("emplog_type", str(emplog.type))
+    return response
+
 if __name__ == "__main__":
     app.secret_key = 'super secret key'
     app.config['SESSION_TYPE'] = 'filesystem'
