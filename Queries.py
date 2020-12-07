@@ -241,6 +241,8 @@ def update_customer_info():
     cuslog_id = int(request.cookies.get('cuslog_id'))
     cus = Customer.query.filter_by(cus_id=cus_id).first()
     cus_log = CustomerLogin.query.filter_by(customerID=cuslog_id).first()
+    print(cus.cus_name)
+    print(cus_log.password)
 
     if request.method == 'POST':
         if False:
@@ -252,19 +254,24 @@ def update_customer_info():
         else:
             if request.form.get('gender') == "male":
                 cus.cus_sex = False
+                gender = "Male"
             else:
                 cus.cus_sex = True
-                
+                gender = "Female"
+
             cus.cus_email = request.form.get('email')
             cus.cus_name = request.form.get('name')
             cus.cus_surname = request.form.get('surname')
             cus.cus_Birthdate = request.form.get('birthdate')
             cus.cus_telNo = request.form.get('telno')
             cus.cus_address = request.form.get('address')
-            cus_log.username = request.form.get('username')
-            cus.log_password = request.form.get('password')
+            db.session.commit()
 
-            response = make_response(render_template('Profile.html', customer = cus, customerlogin = cus_log))
+            cus_log.username = request.form.get('username')
+            cus_log.password = request.form.get('password')
+            db.session.commit()
+
+            response = make_response(render_template('Profile.html', customer = cus, customerlogin = cus_log, content = gender))
             response.set_cookie("cus_id", str(cus_id))
             response.set_cookie("cuslog_id", str(cuslog_id))
             return response
