@@ -3,8 +3,6 @@
 <head>
     <style>
         table, th, td {
-            margin-top: -11%;
-            margin-left: 55%;
             border: 1px solid black;
             text-align: center;
             border-collapse: collapse;
@@ -30,12 +28,16 @@
                <th>order_date</th>
             </tr>
 
-            {% for ord in Order and OrderDate%}
+            {% for ord in Order %}
+                {% for ord_d in OrderDate %}
+                    {% if ord.order_no == ord_d.order_no %}
                <tr>
                    <td>{{ ord.order_no }}</td>
                    <td>{{ ord.customer_id }}</td>
                    <td>{{ ord.carrier_id }}</td>
-                   <td>{{ ord.order_date }}</td>
+                   <td>{{ ord_d.order_date }}</td>
+                    {% endif %}
+                {% endfor %}
             {% endfor %}
       </table>
 </body>
