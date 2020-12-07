@@ -3,8 +3,6 @@
 <head>
     <style>
         table, th, td {
-            margin-top: -11%;
-            margin-left: 55%;
             border: 1px solid black;
             text-align: center;
             border-collapse: collapse;
@@ -19,38 +17,34 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Customers</title>
-    <link rel="stylesheet" href="/static/style.css" />
 </head>
 <body>
-    <table>
+<table>
+
             <tr>
-               <th>memberID </th>
-               <th>name</th>
-               <th>surname</th>
-               <th>address</th>
-               <th>telNo</th>
-               <th>Birthdate</th>
-               <th>startDate</th>
-               <th>salary</th>
-               <th>email</th>
-               <th>department_id</th>
+               <th>cus_id </th>
+               <th>cus_sex</th>
+               <th>cus_email</th>
+               <th>cus_name</th>
+               <th>cus_surname </th>
+               <th>cus_Birthdate</th>
+               <th>cus_telNo</th>
+               <th>cus_totalOrder</th>
+               <th>cus_address</th> 
             </tr>
 
 
-
-            {% for emp in Employee %}
+            {% for cus in Customer%}
                <tr>
-                   <td>{{ emp.memberID }}</td>
-                   <td>{{ emp.name }}</td>
-                   <td>{{ emp.surname }}</td>
-                   <td>{{ emp.address }}</td>
-                   <td>{{ emp.telNo }}</td>
-                   <td>{{ emp.Birthdate }}</td>
-                   <td>{{ emp.startDate }}</td>
-                   <td>{{ emp.salary }}</td>
-                   <td>{{ emp.email }}</td>
-                   <td>{{ emp.department_id }}</td>
-               </tr>
+                   <td>{{ cus.cus_id }}</td>
+                   <td>{{ cus.cus_sex }}</td>
+                   <td>{{ cus.cus_email }}</td>
+                   <td>{{ cus.cus_name }}</td>
+                   <td>{{ cus.cus_surname }}</td>
+                   <td>{{ cus.cus_Birthdate }}</td>
+                   <td>{{ cus.cus_telNo }}</td>
+                   <td>{{ cus.cus_totalOrder }}</td>
+                   <td>{{ cus.cus_address }}</td>
             {% endfor %}
 
       </table>
