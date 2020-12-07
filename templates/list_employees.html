@@ -22,29 +22,31 @@
 <table>
 
             <tr>
-               <th>cus_id </th>
-               <th>cus_sex</th>
-               <th>cus_email</th>
-               <th>cus_name</th>
-               <th>cus_surname </th>
-               <th>cus_Birthdate</th>
-               <th>cus_telNo</th>
-               <th>cus_totalOrder</th>
-               <th>cus_address</th> 
+               <th>memberID </th>
+               <th>name</th>
+               <th>surname</th>
+               <th>address</th>
+               <th>telNo </th>
+               <th>Birthdate</th>
+               <th>startDate</th>
+               <th>salary</th>
+               <th>email</th>
+               <th>department_id</th>
             </tr>
 
 
-            {% for cus in Customer%}
+            {% for emp in Employee%}
                <tr>
-                   <td>{{ cus.cus_id }}</td>
-                   <td>{{ cus.cus_sex }}</td>
-                   <td>{{ cus.cus_email }}</td>
-                   <td>{{ cus.cus_name }}</td>
-                   <td>{{ cus.cus_surname }}</td>
-                   <td>{{ cus.cus_Birthdate }}</td>
-                   <td>{{ cus.cus_telNo }}</td>
-                   <td>{{ cus.cus_totalOrder }}</td>
-                   <td>{{ cus.cus_address }}</td>
+                   <td>{{ emp.memberID }}</td>
+                   <td>{{ emp.name }}</td>
+                   <td>{{ emp.surname }}</td>
+                   <td>{{ emp.address }}</td>
+                   <td>{{ emp.telNo }}</td>
+                   <td>{{ emp.Birthdate }}</td>
+                   <td>{{ emp.startDate }}</td>
+                   <td>{{ emp.salary }}</td>
+                   <td>{{ emp.email }}</td>
+                   <td>{{ emp.department_id }}</td>
             {% endfor %}
 
       </table>
