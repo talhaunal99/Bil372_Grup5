@@ -292,7 +292,7 @@ def add_new_employee():
 
     if request.method == 'POST':
         if False:
-            response = make_response(render_template('admin_page.html', admin_emp=admin_emp, admin=admin, adminlog=adminlog))
+            response = make_response(render_template('AdminHomePage.html', admin_emp=admin_emp, admin=admin, adminlog=adminlog))
             response.set_cookie("emp_id", str(admin_emp.memberID))
             response.set_cookie("admin_id", str(admin.memberID))
             response.set_cookie("adminlog_id", str(adminlog.adminId))
@@ -397,6 +397,20 @@ def main_page():
     response = make_response(render_template('Main-Page.html', customer = cus, customerlogin = cus_log))
     response.set_cookie("cus_id", str(cus_id))
     response.set_cookie("cuslog_id", str(cuslog_id))
+    return response
+
+@app.route('/admin_home_page')
+def admin_home_page():
+    emp_id = int(request.cookies.get('emp_id'))
+    admin_id = int(request.cookies.get('admin_id'))
+    adminlog_id = int(request.cookies.get('adminlog_id'))
+    admin = Admin.query.filter_by(memberID=admin_id).first()
+    admin_emp = Employee.query.filter_by(memberID=emp_id).first()
+    adminlog = AdminLogin.query.filter_by(adminId=adminlog_id).first()
+    response = make_response(render_template('AdminHomePage.html', admin_emp=admin_emp, admin=admin, adminlog=adminlog))
+    response.set_cookie("emp_id", str(admin_emp.memberID))
+    response.set_cookie("admin_id", str(admin.memberID))
+    response.set_cookie("adminlog_id", str(adminlog.adminId))
     return response
 
 if __name__ == "__main__":
