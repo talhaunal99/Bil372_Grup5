@@ -127,6 +127,7 @@ def admin_page():
                 return render_template('admin_login.html')
     else:
         print('error')
+        
 @app.route('/employee_login')
 def employee_login():
     return render_template('employee_login.html')
@@ -143,29 +144,31 @@ def employee_page():
             emplog = EmployeeLogin.query.filter_by(username=username, password=password, type=type).first()  # if this returns a user, then the email already exists in database
 
             if emplog:  # if a user is found, we want to redirect back to signup page so user can try again
-                emp = Employee.query.filter_by(emp_id=emplog.employeeID).first()
+                emp = Employee.query.filter_by(memberID=emplog.employeeID).first()
                 if type == "carrier":
                     response = make_response(render_template('carrier_page.html', employee=emp, employeelogin=emplog))
-                    response.set_cookie("emp_id", str(emp.emp_id))
+                    response.set_cookie("emp_id", str(emp.memberID))
                     response.set_cookie("emplog_id", str(emplog.employeeID))
                     response.set_cookie("emplog_type", str(emplog.type))
                     return response
                 elif type == "chemist":
                     response = make_response(render_template('chemist_page.html', employee=emp, employeelogin=emplog))
-                    response.set_cookie("emp_id", str(emp.emp_id))
+                    response.set_cookie("emp_id", str(emp.memberID))
                     response.set_cookie("emplog_id", str(emplog.employeeID))
                     response.set_cookie("emplog_type", str(emplog.type))
+                    return response
                 elif type == "supplier":
                     response = make_response(render_template('supplier_page.html', employee=emp, employeelogin=emplog))
-                    response.set_cookie("emp_id", str(emp.emp_id))
+                    response.set_cookie("emp_id", str(emp.memberID))
                     response.set_cookie("emplog_id", str(emplog.employeeID))
                     response.set_cookie("emplog_type", str(emplog.type))
+                    return response
                 else:
                     response = make_response(render_template('employee_page.html', employee=emp, employeelogin=emplog))
-                    response.set_cookie("emp_id", str(emp.emp_id))
+                    response.set_cookie("emp_id", str(emp.memberID))
                     response.set_cookie("emplog_id", str(emplog.employeeID))
                     response.set_cookie("emplog_type", str(emplog.type))
-                return response
+                    return response
             else:
                 flash('Incorrect Email or Password')
                 return render_template('employee_login.html')
