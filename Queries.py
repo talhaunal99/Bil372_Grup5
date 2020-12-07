@@ -452,6 +452,17 @@ def items():
     response.set_cookie("emplog_type", str(emplog.type))
     return response
 
+@app.route('/shop')
+def shop():
+    cus_id = int(request.cookies.get('cus_id'))
+    cuslog_id = int(request.cookies.get('cuslog_id'))
+    cus = Customer.query.filter_by(cus_id=cus_id).first()
+    cus_log = CustomerLogin.query.filter_by(customerID = cuslog_id).first()
+    response = make_response(render_template('Page-3.html', customer = cus, customerlogin = cus_log))
+    response.set_cookie("cus_id", str(cus_id))
+    response.set_cookie("cuslog_id", str(cuslog_id))
+    return response
+
 if __name__ == "__main__":
     app.secret_key = 'super secret key'
     app.config['SESSION_TYPE'] = 'filesystem'
