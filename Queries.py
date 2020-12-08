@@ -545,11 +545,12 @@ def shop():
 def get_material():
     mat_id=request.args.get('mat_id')
     material=Material.query.filter_by(mat_id=mat_id).first()
-    material.mat_stock = material.mat_stock + 1
-    db.session.commit()
-    company = Company.query.filter_by(C_id = 1).first()
-    company.Budget = company.Budget - material.mat_price
-    db.session.commit()
+    company = Company.query.filter_by(C_id=1).first()
+    if company.Budget > material.mat_price:
+        company.Budget = company.Budget - material.mat_price
+        db.session.commit()
+        material.mat_stock = material.mat_stock + 1
+        db.session.commit()
     emp_id = int(request.cookies.get("emp_id"))
     emplog_id = int(request.cookies.get("emplog_id"))
     emp = Employee.query.filter_by(memberID = emp_id).first()
