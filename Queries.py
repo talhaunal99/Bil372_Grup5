@@ -4,7 +4,7 @@ from flask_migrate import Migrate
 import datetime
 from model import db, app
 from model import Employee,Customer,CustomerLogin,Carrier,Chemist,Company,Content,Confirms,ConsistOf,Customer_Service,EmployeesOfCompany,Accountant,Includes,EmployeeLogin,AdminLogin,Admin,Analyst,Takes,Order,Sells,Department,Made_by,MadePerfume,Manages,Material,MemberLicenceType,OrderDate,Packages,Perfume,Produces,ProductFeature,Supplier,Vehicle,VehicleFeatures,Worker,ProductQuantity
-
+from random import randrange
 
 @app.route('/')
 def opening():
@@ -1056,6 +1056,42 @@ def add_perfume():
     response.set_cookie("emp_id", str(emp_id))
     response.set_cookie("emplog_id", str(emplog_id))
     response.set_cookie("emplog_type", str(emplog.type))
+    return response
+
+@app.route('/buy_perfume')
+def buy_perfume():
+    cus_id = int(request.cookies.get('cus_id'))
+    cuslog_id = int(request.cookies.get('cuslog_id'))
+    cus = Customer.query.filter_by(cus_id=cus_id).first()
+    cus_log = CustomerLogin.query.filter_by(customerID = cuslog_id).first()
+    id=request.args.get('id')
+    ProductID = int(id)
+    perfume = Perfume.query.filter_by(ProductID = ProductID).first()
+    count = db.session.query(Employee).count()
+    random = randrange(count)+1
+    carrier = Carrier.query.filter_by(memberID = random).first()
+    while not carrier:
+        random = randrange(count) + 1
+        carrier = Carrier.query.filter_by(memberID=random).first()
+
+    if perfume.NumberOfStock > 0:
+        perfume.NumberOfStock = perfume.NumberOfStock-1
+        db.session.commit()
+        cus.cus_totalOrder = cus.cus_totalOrder +1
+        order = Order(cus_id, carrier.memberID)
+        db.session.add(order)
+        db.session.commit()
+        order_no = order.order_no
+        orderDate = OrderDate(order_no, datetime.datetime.now())
+        db.session.add(orderDate)
+        db.session.commit()
+        company = Company.query.filter_by(C_id = 1).first()
+        company.Budget = company.Budget+perfume.Price
+        db.session.commit()
+
+    response = make_response(render_template('Page-3.html', customer = cus, customerlogin = cus_log))
+    response.set_cookie("cus_id", str(cus_id))
+    response.set_cookie("cuslog_id", str(cuslog_id))
     return response
 
 
