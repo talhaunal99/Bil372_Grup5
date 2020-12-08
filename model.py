@@ -328,8 +328,8 @@ class Carrier(db.Model):
     vehicle_id = db.Column(db.Integer, db.ForeignKey('Vehicle.vehicle_id'),primary_key=True)
     memberID= db.Column(db.Integer,db.ForeignKey('Employee.memberID'),primary_key=True)
 
-    def __init__(self, vehhicle_id, memberID):
-        self.vehicle_id = vehhicle_id
+    def __init__(self, vehicle_id, memberID):
+        self.vehicle_id = vehicle_id
         self.memberID = memberID
 
 class MemberLicenceType(db.Model): #Normalization

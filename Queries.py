@@ -560,6 +560,28 @@ def get_material():
     response.set_cookie("emplog_type", str(emplog.type))
     return response
 
+@app.route('/deliver')
+def deliver():
+    order_no = request.args.get('order_no')
+    order=Order.query.filter_by(order_no = order_no).first()
+    print(order_no)
+    emp_id = request.args.get('emp_id')
+    print(emp_id)
+    carrier = Carrier.query.filter_by(memberID=emp_id).first()
+    print(carrier.memberID)
+    vehicle = VehicleFeatures.query.filter_by(vehicle_id=carrier.vehicle_id).first()
+
+    vehicle.kilometer = vehicle.kilometer+5
+    db.session.commit()
+    vehicle.last_price=vehicle.last_price-5*50
+    print(vehicle.vehicle_id)
+    db.session.commit()
+    order_date=OrderDate.query.filter_by(order_no = order_no).first()
+    db.session.delete(order)
+    db.session.delete(order_date)
+    db.session.commit()
+    response = make_response(render_template('list_orders_forCarriers.html', emp_id=emp_id, Order=Order.query.all(),OrderDate=OrderDate.query.all()))
+    return response
 if __name__ == "__main__":
     app.secret_key = 'super secret key'
     app.config['SESSION_TYPE'] = 'filesystem'

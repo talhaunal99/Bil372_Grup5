@@ -67,6 +67,7 @@
                    <td>{{ ord.customer_id }}</td>
                    <td>{{ ord_d.order_date }}</td>
                             <td><button class="btn btn-primary btn-sm">Deliver</button>
+                            <a href="{{ url_for('deliver', order_no=ord.order_no, emp_id=emp_id) }}">Deliver</a>
                         {% endif %}
                     {% endif %}
                 {% endfor %}
