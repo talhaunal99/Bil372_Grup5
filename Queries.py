@@ -1,4 +1,3 @@
-import psycopg2
 from flask_sqlalchemy import SQLAlchemy
 from flask import Flask, request, flash, url_for, redirect, render_template, make_response
 from flask_migrate import Migrate
@@ -488,6 +487,30 @@ def make_perfume():
     response.set_cookie("emplog_type", str(emplog.type))
     return response
 
+@app.route('/items')
+def items():
+    emp_id = int(request.cookies.get("emp_id"))
+    emplog_id = int(request.cookies.get("emplog_id"))
+    emp = Employee.query.filter_by(memberID = emp_id).first()
+    emplog = EmployeeLogin.query.filter_by(employeeID = emplog_id).first()
+    print(emplog_id)
+    print(emplog.type)
+    response = make_response(render_template('Items.html', employee=emp, employeelogin=emplog))
+    response.set_cookie("emp_id", str(emp_id))
+    response.set_cookie("emplog_id", str(emplog_id))
+    response.set_cookie("emplog_type", str(emplog.type))
+    return response
+
+@app.route('/shop')
+def shop():
+    cus_id = int(request.cookies.get('cus_id'))
+    cuslog_id = int(request.cookies.get('cuslog_id'))
+    cus = Customer.query.filter_by(cus_id=cus_id).first()
+    cus_log = CustomerLogin.query.filter_by(customerID = cuslog_id).first()
+    response = make_response(render_template('Page-3.html', customer = cus, customerlogin = cus_log))
+    response.set_cookie("cus_id", str(cus_id))
+    response.set_cookie("cuslog_id", str(cuslog_id))
+    return response
 
 if __name__ == "__main__":
     app.secret_key = 'super secret key'
