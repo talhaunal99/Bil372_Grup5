@@ -146,7 +146,7 @@ def employee_page():
             if emplog:  # if a user is found, we want to redirect back to signup page so user can try again
                 emp = Employee.query.filter_by(memberID=emplog.employeeID).first()
                 if type == "carrier":
-                    response = make_response(render_template('carrier_page.html', employee=emp, employeelogin=emplog))
+                    response = make_response(render_template('carrierpage.html', employee=emp, employeelogin=emplog))
                     response.set_cookie("emp_id", str(emp.memberID))
                     response.set_cookie("emplog_id", str(emplog.employeeID))
                     response.set_cookie("emplog_type", str(emplog.type))
@@ -175,7 +175,7 @@ def employee_page():
     else:
         print('error')
 
-@app.route('/carrier_page', methods=['GET', 'POST']) # Type'a gore degisiklikler yapilmasi gerek.
+@app.route('/carrierpage', methods=['GET', 'POST']) # Type'a gore degisiklikler yapilmasi gerek.
 def carrier_page():
     if request.method == 'POST':
         if not request.form['username'] or not request.form['password']:
@@ -188,7 +188,7 @@ def carrier_page():
 
             if emplog:  # if a user is found, we want to redirect back to signup page so user can try again
                 emp = Employee.query.filter_by(emp_id=emplog.employeeID).first()
-                response = make_response(render_template('carrier_page.html', employee = emp, employeelogin = emplog))
+                response = make_response(render_template('carrierpage.html', employee = emp, employeelogin = emplog))
                 response.set_cookie("emp_id", str(emp.emp_id))
                 response.set_cookie("emplog_id", str(emplog.employeeID))
                 return response
