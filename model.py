@@ -69,6 +69,10 @@ class Order(db.Model):
     customer_id=db.Column(db.Integer, db.ForeignKey('customer.cus_id'),primary_key=True)
     carrier_id = db.Column(db.Integer,db.ForeignKey('Employee.memberID'),primary_key=True)
 
+    def __init__(self, customer_id, carrier_id):
+        self.customer_id=customer_id
+        self.carrier_id=carrier_id
+
 class OrderDate(db.Model): #Normalization
     __tablename__ = 'OrderDate'
     order_no = db.Column(db.Integer,db.ForeignKey('Order.order_no'), primary_key=True)
