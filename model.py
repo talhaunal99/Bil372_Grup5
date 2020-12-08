@@ -110,17 +110,6 @@ class Takes(db.Model):
         self.quantity = quantity
         self.cost = cost
 
-class TakesFirm(db.Model): #Normalization
-    __tablename__ = 'takesFirm'
-    matId = db.Column(db.Integer,db.ForeignKey('Material.mat_id',primary_key=True))
-    memberID = db.Column(db.Integer,db.ForeignKey('Employee.memberID'),primary_key=True)
-    firm_name = db.Column(db.String)
-
-    def __init__(self, matId, memberID, firm_name):
-        self.matId = matId
-        self.memberID = memberID
-        self.firm_name = firm_name
-
 class Vehicle(db.Model):
     __tablename__ = 'Vehicle'
     c_id = db.Column(db.Integer,db.ForeignKey('Company.C_id'))
