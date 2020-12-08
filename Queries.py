@@ -1058,6 +1058,7 @@ def add_perfume():
     response.set_cookie("emplog_type", str(emplog.type))
     return response
 
+
 if __name__ == "__main__":
     app.secret_key = 'super secret key'
     app.config['SESSION_TYPE'] = 'filesystem'
