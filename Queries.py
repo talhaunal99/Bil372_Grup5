@@ -519,7 +519,7 @@ def make_perfume():
     emplog = EmployeeLogin.query.filter_by(employeeID = emplog_id).first()
     print(emplog_id)
     print(emplog.type)
-    response = make_response(render_template('MakePerfume.html', employee=emp, employeelogin=emplog))
+    response = make_response(render_template('MakePerfume.html', employee=emp, employeelogin=emplog, error = 0))
     response.set_cookie("emp_id", str(emp_id))
     response.set_cookie("emplog_id", str(emplog_id))
     response.set_cookie("emplog_type", str(emplog.type))
@@ -533,7 +533,7 @@ def items():
     emplog = EmployeeLogin.query.filter_by(employeeID = emplog_id).first()
     print(emplog_id)
     print(emplog.type)
-    response = make_response(render_template('Items.html', employee=emp, employeelogin=emplog))
+    response = make_response(render_template('Items.html', employee=emp, employeelogin=emplog, error = 0))
     response.set_cookie("emp_id", str(emp_id))
     response.set_cookie("emplog_id", str(emplog_id))
     response.set_cookie("emplog_type", str(emplog.type))
@@ -545,7 +545,7 @@ def shop():
     cuslog_id = int(request.cookies.get('cuslog_id'))
     cus = Customer.query.filter_by(cus_id=cus_id).first()
     cus_log = CustomerLogin.query.filter_by(customerID = cuslog_id).first()
-    response = make_response(render_template('Page-3.html', customer = cus, customerlogin = cus_log))
+    response = make_response(render_template('Page-3.html', customer = cus, customerlogin = cus_log, error=0))
     response.set_cookie("cus_id", str(cus_id))
     response.set_cookie("cuslog_id", str(cuslog_id))
     return response
@@ -555,20 +555,27 @@ def get_material():
     mat_id=request.args.get('mat_id')
     material=Material.query.filter_by(mat_id=mat_id).first()
     company = Company.query.filter_by(C_id=1).first()
+    emp_id = int(request.cookies.get("emp_id"))
+    emplog_id = int(request.cookies.get("emplog_id"))
+    emp = Employee.query.filter_by(memberID = emp_id).first()
+    emplog = EmployeeLogin.query.filter_by(employeeID = emplog_id).first()
+
     if company.Budget > material.mat_price:
         company.Budget = company.Budget - material.mat_price
         db.session.commit()
         material.mat_stock = material.mat_stock + 1
         db.session.commit()
-    emp_id = int(request.cookies.get("emp_id"))
-    emplog_id = int(request.cookies.get("emplog_id"))
-    emp = Employee.query.filter_by(memberID = emp_id).first()
-    emplog = EmployeeLogin.query.filter_by(employeeID = emplog_id).first()
-    response = make_response(render_template('Items.html', employee=emp, employeelogin=emplog))
-    response.set_cookie("emp_id", str(emp_id))
-    response.set_cookie("emplog_id", str(emplog_id))
-    response.set_cookie("emplog_type", str(emplog.type))
-    return response
+        response = make_response(render_template('Items.html', employee=emp, employeelogin=emplog, error=2))
+        response.set_cookie("emp_id", str(emp_id))
+        response.set_cookie("emplog_id", str(emplog_id))
+        response.set_cookie("emplog_type", str(emplog.type))
+        return response
+    else:
+        response = make_response(render_template('Items.html', employee=emp, employeelogin=emplog, error=1))
+        response.set_cookie("emp_id", str(emp_id))
+        response.set_cookie("emplog_id", str(emplog_id))
+        response.set_cookie("emplog_type", str(emplog.type))
+        return response
 
 @app.route('/deliver')
 def deliver():
@@ -598,8 +605,11 @@ def add_perfume():
     id=request.args.get('id')
     emp_id = int(request.cookies.get("emp_id"))
     ProductID = int(id)
+    emplog_id = int(request.cookies.get("emplog_id"))
+    emp = Employee.query.filter_by(memberID = emp_id).first()
+    emplog = EmployeeLogin.query.filter_by(employeeID = emplog_id).first()
+
     if ProductID == 1:
-        print("here")
         mat_id = 6
         mat = Material.query.filter_by(mat_id = mat_id).first()
         if mat.mat_stock>0:
@@ -609,8 +619,17 @@ def add_perfume():
             db.session.commit()
             mat.mat_stock = mat.mat_stock-1
             db.session.commit()
+            response = make_response(render_template('MakePerfume.html', employee=emp, employeelogin=emplog, error=2))
+            response.set_cookie("emp_id", str(emp_id))
+            response.set_cookie("emplog_id", str(emplog_id))
+            response.set_cookie("emplog_type", str(emplog.type))
+            return response
         else:
-            flash('Insufficient material!')
+            response = make_response(render_template('MakePerfume.html', employee=emp, employeelogin=emplog, error=1))
+            response.set_cookie("emp_id", str(emp_id))
+            response.set_cookie("emplog_id", str(emplog_id))
+            response.set_cookie("emplog_type", str(emplog.type))
+            return response
     elif ProductID == 2:
         mat_id = 2
         mat_id2 = 5
@@ -624,8 +643,17 @@ def add_perfume():
             db.session.commit()
             mat2.mat_stock = mat2.mat_stock-1
             db.session.commit()
+            response = make_response(render_template('MakePerfume.html', employee=emp, employeelogin=emplog, error=2))
+            response.set_cookie("emp_id", str(emp_id))
+            response.set_cookie("emplog_id", str(emplog_id))
+            response.set_cookie("emplog_type", str(emplog.type))
+            return response
         else:
-            flash('Insufficient material!')
+            response = make_response(render_template('MakePerfume.html', employee=emp, employeelogin=emplog, error=1))
+            response.set_cookie("emp_id", str(emp_id))
+            response.set_cookie("emplog_id", str(emplog_id))
+            response.set_cookie("emplog_type", str(emplog.type))
+            return response
     elif ProductID == 3:
         mat_id = 5
         mat_id2 = 9
@@ -639,8 +667,17 @@ def add_perfume():
             db.session.commit()
             mat2.mat_stock = mat2.mat_stock-1
             db.session.commit()
+            response = make_response(render_template('MakePerfume.html', employee=emp, employeelogin=emplog, error=2))
+            response.set_cookie("emp_id", str(emp_id))
+            response.set_cookie("emplog_id", str(emplog_id))
+            response.set_cookie("emplog_type", str(emplog.type))
+            return response
         else:
-            flash('Insufficient material!')
+            response = make_response(render_template('MakePerfume.html', employee=emp, employeelogin=emplog, error=1))
+            response.set_cookie("emp_id", str(emp_id))
+            response.set_cookie("emplog_id", str(emplog_id))
+            response.set_cookie("emplog_type", str(emplog.type))
+            return response
     elif ProductID == 4:
         mat_id = 2
         mat_id2 = 11
@@ -654,8 +691,17 @@ def add_perfume():
             db.session.commit()
             mat2.mat_stock = mat2.mat_stock-1
             db.session.commit()
+            response = make_response(render_template('MakePerfume.html', employee=emp, employeelogin=emplog, error=2))
+            response.set_cookie("emp_id", str(emp_id))
+            response.set_cookie("emplog_id", str(emplog_id))
+            response.set_cookie("emplog_type", str(emplog.type))
+            return response
         else:
-            flash('Insufficient material!')
+            response = make_response(render_template('MakePerfume.html', employee=emp, employeelogin=emplog, error=1))
+            response.set_cookie("emp_id", str(emp_id))
+            response.set_cookie("emplog_id", str(emplog_id))
+            response.set_cookie("emplog_type", str(emplog.type))
+            return response
     elif ProductID == 5:
         mat_id = 2
         mat_id2 = 6
@@ -669,8 +715,17 @@ def add_perfume():
             db.session.commit()
             mat2.mat_stock = mat2.mat_stock-1
             db.session.commit()
+            response = make_response(render_template('MakePerfume.html', employee=emp, employeelogin=emplog, error=2))
+            response.set_cookie("emp_id", str(emp_id))
+            response.set_cookie("emplog_id", str(emplog_id))
+            response.set_cookie("emplog_type", str(emplog.type))
+            return response
         else:
-            flash('Insufficient material!')
+            response = make_response(render_template('MakePerfume.html', employee=emp, employeelogin=emplog, error=1))
+            response.set_cookie("emp_id", str(emp_id))
+            response.set_cookie("emplog_id", str(emplog_id))
+            response.set_cookie("emplog_type", str(emplog.type))
+            return response
     elif ProductID == 6:
         mat_id = 12
         mat_id2 = 13
@@ -684,8 +739,17 @@ def add_perfume():
             db.session.commit()
             mat2.mat_stock = mat2.mat_stock-1
             db.session.commit()
+            response = make_response(render_template('MakePerfume.html', employee=emp, employeelogin=emplog, error=2))
+            response.set_cookie("emp_id", str(emp_id))
+            response.set_cookie("emplog_id", str(emplog_id))
+            response.set_cookie("emplog_type", str(emplog.type))
+            return response
         else:
-            flash('Insufficient material!')
+            response = make_response(render_template('MakePerfume.html', employee=emp, employeelogin=emplog, error=1))
+            response.set_cookie("emp_id", str(emp_id))
+            response.set_cookie("emplog_id", str(emplog_id))
+            response.set_cookie("emplog_type", str(emplog.type))
+            return response
     elif ProductID == 7:
         mat_id = 12
         mat_id2 = 15
@@ -699,8 +763,17 @@ def add_perfume():
             db.session.commit()
             mat2.mat_stock = mat2.mat_stock-1
             db.session.commit()
+            response = make_response(render_template('MakePerfume.html', employee=emp, employeelogin=emplog, error=2))
+            response.set_cookie("emp_id", str(emp_id))
+            response.set_cookie("emplog_id", str(emplog_id))
+            response.set_cookie("emplog_type", str(emplog.type))
+            return response
         else:
-            flash('Insufficient material!')
+            response = make_response(render_template('MakePerfume.html', employee=emp, employeelogin=emplog, error=1))
+            response.set_cookie("emp_id", str(emp_id))
+            response.set_cookie("emplog_id", str(emplog_id))
+            response.set_cookie("emplog_type", str(emplog.type))
+            return response
     elif ProductID == 8:
         mat_id = 7
         mat = Material.query.filter_by(mat_id = mat_id).first()
@@ -710,8 +783,17 @@ def add_perfume():
             db.session.commit()
             mat.mat_stock = mat.mat_stock-1
             db.session.commit()
+            response = make_response(render_template('MakePerfume.html', employee=emp, employeelogin=emplog, error=2))
+            response.set_cookie("emp_id", str(emp_id))
+            response.set_cookie("emplog_id", str(emplog_id))
+            response.set_cookie("emplog_type", str(emplog.type))
+            return response
         else:
-            flash('Insufficient material!')
+            response = make_response(render_template('MakePerfume.html', employee=emp, employeelogin=emplog, error=1))
+            response.set_cookie("emp_id", str(emp_id))
+            response.set_cookie("emplog_id", str(emplog_id))
+            response.set_cookie("emplog_type", str(emplog.type))
+            return response
     elif ProductID == 9:
         mat_id = 2
         mat_id2 = 3
@@ -725,8 +807,17 @@ def add_perfume():
             db.session.commit()
             mat2.mat_stock = mat2.mat_stock-1
             db.session.commit()
+            response = make_response(render_template('MakePerfume.html', employee=emp, employeelogin=emplog, error=2))
+            response.set_cookie("emp_id", str(emp_id))
+            response.set_cookie("emplog_id", str(emplog_id))
+            response.set_cookie("emplog_type", str(emplog.type))
+            return response
         else:
-            flash('Insufficient material!')
+            response = make_response(render_template('MakePerfume.html', employee=emp, employeelogin=emplog, error=1))
+            response.set_cookie("emp_id", str(emp_id))
+            response.set_cookie("emplog_id", str(emplog_id))
+            response.set_cookie("emplog_type", str(emplog.type))
+            return response
     elif ProductID == 10:
         mat_id = 2
         mat_id2 = 6
@@ -740,8 +831,17 @@ def add_perfume():
             db.session.commit()
             mat2.mat_stock = mat2.mat_stock-1
             db.session.commit()
+            response = make_response(render_template('MakePerfume.html', employee=emp, employeelogin=emplog, error=2))
+            response.set_cookie("emp_id", str(emp_id))
+            response.set_cookie("emplog_id", str(emplog_id))
+            response.set_cookie("emplog_type", str(emplog.type))
+            return response
         else:
-            flash('Insufficient material!')
+            response = make_response(render_template('MakePerfume.html', employee=emp, employeelogin=emplog, error=1))
+            response.set_cookie("emp_id", str(emp_id))
+            response.set_cookie("emplog_id", str(emplog_id))
+            response.set_cookie("emplog_type", str(emplog.type))
+            return response
     elif ProductID == 11:
         mat_id = 13
         mat = Material.query.filter_by(mat_id = mat_id).first()
@@ -751,8 +851,17 @@ def add_perfume():
             db.session.commit()
             mat.mat_stock = mat.mat_stock-1
             db.session.commit()
+            response = make_response(render_template('MakePerfume.html', employee=emp, employeelogin=emplog, error=2))
+            response.set_cookie("emp_id", str(emp_id))
+            response.set_cookie("emplog_id", str(emplog_id))
+            response.set_cookie("emplog_type", str(emplog.type))
+            return response
         else:
-            flash('Insufficient material!')
+            response = make_response(render_template('MakePerfume.html', employee=emp, employeelogin=emplog, error=1))
+            response.set_cookie("emp_id", str(emp_id))
+            response.set_cookie("emplog_id", str(emplog_id))
+            response.set_cookie("emplog_type", str(emplog.type))
+            return response
     elif ProductID == 12:
         mat_id = 8
         mat = Material.query.filter_by(mat_id = mat_id).first()
@@ -762,8 +871,17 @@ def add_perfume():
             db.session.commit()
             mat.mat_stock = mat.mat_stock-1
             db.session.commit()
+            response = make_response(render_template('MakePerfume.html', employee=emp, employeelogin=emplog, error=2))
+            response.set_cookie("emp_id", str(emp_id))
+            response.set_cookie("emplog_id", str(emplog_id))
+            response.set_cookie("emplog_type", str(emplog.type))
+            return response
         else:
-            flash('Insufficient material!')
+            response = make_response(render_template('MakePerfume.html', employee=emp, employeelogin=emplog, error=1))
+            response.set_cookie("emp_id", str(emp_id))
+            response.set_cookie("emplog_id", str(emplog_id))
+            response.set_cookie("emplog_type", str(emplog.type))
+            return response
     elif ProductID == 13:
         mat_id = 1
         mat_id2 = 4
@@ -777,8 +895,17 @@ def add_perfume():
             db.session.commit()
             mat2.mat_stock = mat2.mat_stock-1
             db.session.commit()
+            response = make_response(render_template('MakePerfume.html', employee=emp, employeelogin=emplog, error=2))
+            response.set_cookie("emp_id", str(emp_id))
+            response.set_cookie("emplog_id", str(emplog_id))
+            response.set_cookie("emplog_type", str(emplog.type))
+            return response
         else:
-            flash('Insufficient material!')
+            response = make_response(render_template('MakePerfume.html', employee=emp, employeelogin=emplog, error=1))
+            response.set_cookie("emp_id", str(emp_id))
+            response.set_cookie("emplog_id", str(emplog_id))
+            response.set_cookie("emplog_type", str(emplog.type))
+            return response
     elif ProductID == 14:
         mat_id = 7
         mat = Material.query.filter_by(mat_id = mat_id).first()
@@ -788,8 +915,17 @@ def add_perfume():
             db.session.commit()
             mat.mat_stock = mat.mat_stock-1
             db.session.commit()
+            response = make_response(render_template('MakePerfume.html', employee=emp, employeelogin=emplog, error=2))
+            response.set_cookie("emp_id", str(emp_id))
+            response.set_cookie("emplog_id", str(emplog_id))
+            response.set_cookie("emplog_type", str(emplog.type))
+            return response
         else:
-            flash('Insufficient material!')
+            response = make_response(render_template('MakePerfume.html', employee=emp, employeelogin=emplog, error=1))
+            response.set_cookie("emp_id", str(emp_id))
+            response.set_cookie("emplog_id", str(emplog_id))
+            response.set_cookie("emplog_type", str(emplog.type))
+            return response
     elif ProductID == 15:
         mat_id = 9
         mat = Material.query.filter_by(mat_id = mat_id).first()
@@ -799,8 +935,17 @@ def add_perfume():
             db.session.commit()
             mat.mat_stock = mat.mat_stock-1
             db.session.commit()
+            response = make_response(render_template('MakePerfume.html', employee=emp, employeelogin=emplog, error=2))
+            response.set_cookie("emp_id", str(emp_id))
+            response.set_cookie("emplog_id", str(emplog_id))
+            response.set_cookie("emplog_type", str(emplog.type))
+            return response
         else:
-            flash('Insufficient material!')
+            response = make_response(render_template('MakePerfume.html', employee=emp, employeelogin=emplog, error=1))
+            response.set_cookie("emp_id", str(emp_id))
+            response.set_cookie("emplog_id", str(emplog_id))
+            response.set_cookie("emplog_type", str(emplog.type))
+            return response
     elif ProductID == 16:
         mat_id = 11
         mat_id2 = 12
@@ -814,8 +959,17 @@ def add_perfume():
             db.session.commit()
             mat2.mat_stock = mat2.mat_stock-1
             db.session.commit()
+            response = make_response(render_template('MakePerfume.html', employee=emp, employeelogin=emplog, error=2))
+            response.set_cookie("emp_id", str(emp_id))
+            response.set_cookie("emplog_id", str(emplog_id))
+            response.set_cookie("emplog_type", str(emplog.type))
+            return response
         else:
-            flash('Insufficient material!')
+            response = make_response(render_template('MakePerfume.html', employee=emp, employeelogin=emplog, error=1))
+            response.set_cookie("emp_id", str(emp_id))
+            response.set_cookie("emplog_id", str(emplog_id))
+            response.set_cookie("emplog_type", str(emplog.type))
+            return response
     elif ProductID == 17:
         mat_id = 13
         mat_id2 = 14
@@ -829,8 +983,17 @@ def add_perfume():
             db.session.commit()
             mat2.mat_stock = mat2.mat_stock-1
             db.session.commit()
+            response = make_response(render_template('MakePerfume.html', employee=emp, employeelogin=emplog, error=2))
+            response.set_cookie("emp_id", str(emp_id))
+            response.set_cookie("emplog_id", str(emplog_id))
+            response.set_cookie("emplog_type", str(emplog.type))
+            return response
         else:
-            flash('Insufficient material!')
+            response = make_response(render_template('MakePerfume.html', employee=emp, employeelogin=emplog, error=1))
+            response.set_cookie("emp_id", str(emp_id))
+            response.set_cookie("emplog_id", str(emplog_id))
+            response.set_cookie("emplog_type", str(emplog.type))
+            return response
     elif ProductID == 18:
         mat_id = 5
         mat_id2 = 13
@@ -844,8 +1007,17 @@ def add_perfume():
             db.session.commit()
             mat2.mat_stock = mat2.mat_stock-1
             db.session.commit()
+            response = make_response(render_template('MakePerfume.html', employee=emp, employeelogin=emplog, error=2))
+            response.set_cookie("emp_id", str(emp_id))
+            response.set_cookie("emplog_id", str(emplog_id))
+            response.set_cookie("emplog_type", str(emplog.type))
+            return response
         else:
-            flash('Insufficient material!')
+            response = make_response(render_template('MakePerfume.html', employee=emp, employeelogin=emplog, error=1))
+            response.set_cookie("emp_id", str(emp_id))
+            response.set_cookie("emplog_id", str(emplog_id))
+            response.set_cookie("emplog_type", str(emplog.type))
+            return response
     elif ProductID == 19:
         mat_id = 5
         mat_id2 = 6
@@ -859,8 +1031,17 @@ def add_perfume():
             db.session.commit()
             mat2.mat_stock = mat2.mat_stock-1
             db.session.commit()
+            response = make_response(render_template('MakePerfume.html', employee=emp, employeelogin=emplog, error=2))
+            response.set_cookie("emp_id", str(emp_id))
+            response.set_cookie("emplog_id", str(emplog_id))
+            response.set_cookie("emplog_type", str(emplog.type))
+            return response
         else:
-            flash('Insufficient material!')
+            response = make_response(render_template('MakePerfume.html', employee=emp, employeelogin=emplog, error=1))
+            response.set_cookie("emp_id", str(emp_id))
+            response.set_cookie("emplog_id", str(emplog_id))
+            response.set_cookie("emplog_type", str(emplog.type))
+            return response
     else:
         mat_id = 2
         mat_id2 = 14
@@ -874,18 +1055,17 @@ def add_perfume():
             db.session.commit()
             mat2.mat_stock = mat2.mat_stock - 1
             db.session.commit()
+            response = make_response(render_template('MakePerfume.html', employee=emp, employeelogin=emplog, error=2))
+            response.set_cookie("emp_id", str(emp_id))
+            response.set_cookie("emplog_id", str(emplog_id))
+            response.set_cookie("emplog_type", str(emplog.type))
+            return response
         else:
-            flash('Insufficient material!')
-
-    emp_id = int(request.cookies.get("emp_id"))
-    emplog_id = int(request.cookies.get("emplog_id"))
-    emp = Employee.query.filter_by(memberID = emp_id).first()
-    emplog = EmployeeLogin.query.filter_by(employeeID = emplog_id).first()
-    response = make_response(render_template('MakePerfume.html', employee=emp, employeelogin=emplog))
-    response.set_cookie("emp_id", str(emp_id))
-    response.set_cookie("emplog_id", str(emplog_id))
-    response.set_cookie("emplog_type", str(emplog.type))
-    return response
+            response = make_response(render_template('MakePerfume.html', employee=emp, employeelogin=emplog, error=1))
+            response.set_cookie("emp_id", str(emp_id))
+            response.set_cookie("emplog_id", str(emplog_id))
+            response.set_cookie("emplog_type", str(emplog.type))
+            return response
 
 @app.route('/buy_perfume')
 def buy_perfume():
@@ -895,6 +1075,8 @@ def buy_perfume():
     cus_log = CustomerLogin.query.filter_by(customerID = cuslog_id).first()
     id=request.args.get('id')
     ProductID = int(id)
+    print("id",id)
+    print("pro",ProductID)
     perfume = Perfume.query.filter_by(ProductID = ProductID).first()
     count = db.session.query(Employee).count()
     random = randrange(count)+1
@@ -917,11 +1099,15 @@ def buy_perfume():
         company = Company.query.filter_by(C_id = 1).first()
         company.Budget = company.Budget+perfume.Price
         db.session.commit()
-
-    response = make_response(render_template('Page-3.html', customer = cus, customerlogin = cus_log))
-    response.set_cookie("cus_id", str(cus_id))
-    response.set_cookie("cuslog_id", str(cuslog_id))
-    return response
+        response = make_response(render_template('Page-3.html', customer=cus, customerlogin=cus_log, error=2))
+        response.set_cookie("cus_id", str(cus_id))
+        response.set_cookie("cuslog_id", str(cuslog_id))
+        return response
+    else:
+        response = make_response(render_template('Page-3.html', customer=cus, customerlogin=cus_log, error=1))
+        response.set_cookie("cus_id", str(cus_id))
+        response.set_cookie("cuslog_id", str(cuslog_id))
+        return response
 
 
 if __name__ == "__main__":
