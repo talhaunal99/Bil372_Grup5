@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Update Informations</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="{{url_for('static', filename='main.css')}}">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="wrapper">
+<div class="container" style="min-height:100% width:80%">
+  {% with messages = get_flashed_messages() %}
+    {% if messages %}
+      {% for message in messages %}
+        <div class="alert alert-warning alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+          {{message}}
+        </div>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+
+  {% block body %}{% endblock %}
+  </div>
+  <form class="form-signin_up" method="post" action="{{ '/update_employee_info' }}">
+    <h2 class="form-signin_up-heading">Update</h2>
+    <br></br>
+    <label>Name: </label>
+    <input type="text" class="form-control" name="name" placeholder="name"  value="{{ employee.name }}" required=""  autofocus="" />
+    <label>Surname: </label>
+    <input type="text" class="form-control" name="surname" placeholder="surname"  value="{{ employee.surname }}" required=""  autofocus="" />
+     <label>BirthDate: </label>
+      <input type="date" class="form-control" name="birthdate" placeholder="birthdate"  value="{{ employee.Birthdate }}" required=""  autofocus="" />
+    <label>Address: </label>
+    <input type="textarea" class="form-control" name="address" placeholder="address"  value="{{ employee.address}}" required=""  autofocus=""/>
+      <label>TelNo: </label>
+    <input type="tel" class="form-control" name="telNo" placeholder="telNo"  value="{{ employee.telNo }}" required=""  autofocus="" />
+     <label>Email: </label>
+    <input type="email" class="form-control" name="email" placeholder="email"  value="{{ employee.email }}" required="" autofocus="" />
+      <label>Salary: </label>
+    <input type="text" class="form-control" name="salary" placeholder="salary"  value="{{ employee.salary }}" required=""  autofocus="" />
+       <label>Username: </label>
+    <input type="text" class="form-control" name="username" placeholder="username"  value="{{ employeelogin.username }}" required=""  autofocus="" />
+    <label>Password: </label>
+    <input type="text" class="form-control" name="password" value="{{ employeelogin.password }}" required=""  autofocus="" />
+    <br></br>
+    <button class="btn btn-lg btn-primary btn-block" type="submit">Update</button>
+    <p></p>
+  </form>
+</div>

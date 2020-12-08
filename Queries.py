@@ -1,3 +1,4 @@
+import psycopg2
 from flask_sqlalchemy import SQLAlchemy
 from flask import Flask, request, flash, url_for, redirect, render_template, make_response
 from flask_migrate import Migrate
@@ -276,6 +277,55 @@ def update_customer_info():
             response.set_cookie("cuslog_id", str(cuslog_id))
             return response
 
+@app.route('/update_employee_info_page')
+def update_employee_info_page():
+    emp_id = request.args.get('memberID')
+    emplog_id = request.args.get('memberID')
+    print(emp_id)
+    print(emplog_id)
+    emp = Employee.query.filter_by(memberID=emp_id).first()
+    emp_log = EmployeeLogin.query.filter_by(employeeID = emplog_id).first()
+    response = make_response(render_template('update_employee_info.html', employee = emp, employeelogin = emp_log, Employee=Employee.query.all()))
+    response.set_cookie("emp_id", str(emp_id))
+    response.set_cookie("emplog_id", str(emplog_id))
+
+    return response
+
+@app.route('/update_employee_info', methods=['GET', 'POST'])
+def update_employee_info():
+    emp_id = int(request.cookies.get('emp_id'))
+    emplog_id = int(request.cookies.get('emplog_id'))
+    emp = Employee.query.filter_by(memberID=emp_id).first()
+    emp_log = EmployeeLogin.query.filter_by(employeeID=emplog_id).first()
+    print(emp.name)
+    print(emp_log.password)
+
+    if request.method == 'POST':
+        if False:
+            response = make_response(render_template('Profile.html', customer = cus, customerlogin = cus_log))
+            response.set_cookie("cus_id", str(cus_id))
+            response.set_cookie("cuslog_id", str(cuslog_id))
+            return response
+
+        else:
+            emp.email = request.form.get('email')
+            emp.name = request.form.get('name')
+            emp.surname = request.form.get('surname')
+            emp.Birthdate = request.form.get('birthdate')
+            emp.address = request.form.get('address')
+            emp.telNo = request.form.get('telno')
+            emp.salary = request.form.get('salary')
+            db.session.commit()
+
+            emp_log.username = request.form.get('username')
+            emp_log.password = request.form.get('password')
+            db.session.commit()
+
+            response = make_response(render_template('list_employees.html', employee = emp, employeelogin = emp_log, Employee=Employee.query.all()))
+            response.set_cookie("emp_id", str(emp_id))
+            response.set_cookie("emplog_id", str(emplog_id))
+            return response
+
 @app.route('/add_new_employee_page')
 def add_new_employee_page():
     emp_id = int(request.cookies.get('emp_id'))
@@ -437,6 +487,7 @@ def make_perfume():
     response.set_cookie("emplog_id", str(emplog_id))
     response.set_cookie("emplog_type", str(emplog.type))
     return response
+
 
 if __name__ == "__main__":
     app.secret_key = 'super secret key'
