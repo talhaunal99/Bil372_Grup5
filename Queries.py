@@ -3,7 +3,7 @@ from flask import Flask, request, flash, url_for, redirect, render_template, mak
 from flask_migrate import Migrate
 import datetime
 from model import db, app
-from model import Employee,Customer,CustomerLogin,Carrier,Chemist,Company,Content,Confirms,ConsistOf,Customer_Service,EmployeesOfCompany,Accountant,Includes,EmployeeLogin,AdminLogin,Admin,Analyst,Takes,Order,Sells,Department,Made_by,MadePerfume,Manages,Material,MemberLicenceType,OrderDate,Packages,Perfume,Produces,ProductFeature,Supplier,Vehicle,VehicleFeatures,Worker,ProductQuantity
+from model import Employee,Customer,CustomerLogin,Carrier,Chemist,Company,Content,Confirms,ConsistOf,Customer_Service,EmployeesOfCompany,Accountant,Includes,EmployeeLogin,AdminLogin,Admin,Analyst,Takes,Order,Sells,Department,Manages,Material,MemberLicenceType,OrderDate,Packages,Perfume,ProductFeature,Supplier,Vehicle,VehicleFeatures,Worker,ProductQuantity
 from random import randrange
 
 @app.route('/')
@@ -401,7 +401,7 @@ def add_new_employee():
                 db.session.add(newemp)
                 db.session.commit()
             elif type == "carrier":
-                newemp = Carrier(id)
+                newemp = Carrier(1, id)
                 db.session.add(newemp)
                 db.session.commit()
             elif type == "chemist":
@@ -429,7 +429,16 @@ def add_new_employee():
 
 @app.route('/list_employees')
 def list_employees():
+    emp_id = int(request.cookies.get('emp_id'))
+    admin_id = int(request.cookies.get('admin_id'))
+    adminlog_id = int(request.cookies.get('adminlog_id'))
+    admin = Admin.query.filter_by(memberID=admin_id).first()
+    admin_emp = Employee.query.filter_by(memberID=emp_id).first()
+    adminlog = AdminLogin.query.filter_by(adminId=adminlog_id).first()
     response = make_response(render_template('list_employees.html', Employee=Employee.query.all()))
+    response.set_cookie("emp_id", str(admin_emp.memberID))
+    response.set_cookie("admin_id", str(admin.memberID))
+    response.set_cookie("adminlog_id", str(adminlog.adminId))
     return response
 
 @app.route('/list_vehicles')
@@ -587,7 +596,6 @@ def deliver():
 @app.route('/add_perfume')
 def add_perfume():
     id=request.args.get('id')
-    print("pro", id)
     emp_id = int(request.cookies.get("emp_id"))
     ProductID = int(id)
     if ProductID == 1:
@@ -600,15 +608,6 @@ def add_perfume():
             perfume.NumberOfStock = perfume.NumberOfStock+1
             db.session.commit()
             mat.mat_stock = mat.mat_stock-1
-            db.session.commit()
-            made_by = Made_by(emp_id, ProductID)
-            db.session.add(made_by)
-            db.session.commit()
-            made_perfume = MadePerfume(ProductID, emp_id)
-            db.session.add(made_perfume)
-            db.session.commit()
-            produces = Produces(emp_id, ProductID)
-            db.session.add(produces)
             db.session.commit()
         else:
             flash('Insufficient material!')
@@ -625,15 +624,6 @@ def add_perfume():
             db.session.commit()
             mat2.mat_stock = mat2.mat_stock-1
             db.session.commit()
-            made_by = Made_by(emp_id, ProductID)
-            db.session.add(made_by)
-            db.session.commit()
-            made_perfume = MadePerfume(ProductID, emp_id)
-            db.session.add(made_perfume)
-            db.session.commit()
-            produces = Produces(emp_id, ProductID)
-            db.session.add(produces)
-            db.session.commit()
         else:
             flash('Insufficient material!')
     elif ProductID == 3:
@@ -648,15 +638,6 @@ def add_perfume():
             mat.mat_stock = mat.mat_stock-1
             db.session.commit()
             mat2.mat_stock = mat2.mat_stock-1
-            db.session.commit()
-            made_by = Made_by(emp_id, ProductID)
-            db.session.add(made_by)
-            db.session.commit()
-            made_perfume = MadePerfume(ProductID, emp_id)
-            db.session.add(made_perfume)
-            db.session.commit()
-            produces = Produces(emp_id, ProductID)
-            db.session.add(produces)
             db.session.commit()
         else:
             flash('Insufficient material!')
@@ -673,15 +654,6 @@ def add_perfume():
             db.session.commit()
             mat2.mat_stock = mat2.mat_stock-1
             db.session.commit()
-            made_by = Made_by(emp_id, ProductID)
-            db.session.add(made_by)
-            db.session.commit()
-            made_perfume = MadePerfume(ProductID, emp_id)
-            db.session.add(made_perfume)
-            db.session.commit()
-            produces = Produces(emp_id, ProductID)
-            db.session.add(produces)
-            db.session.commit()
         else:
             flash('Insufficient material!')
     elif ProductID == 5:
@@ -696,15 +668,6 @@ def add_perfume():
             mat.mat_stock = mat.mat_stock-1
             db.session.commit()
             mat2.mat_stock = mat2.mat_stock-1
-            db.session.commit()
-            made_by = Made_by(emp_id, ProductID)
-            db.session.add(made_by)
-            db.session.commit()
-            made_perfume = MadePerfume(ProductID, emp_id)
-            db.session.add(made_perfume)
-            db.session.commit()
-            produces = Produces(emp_id, ProductID)
-            db.session.add(produces)
             db.session.commit()
         else:
             flash('Insufficient material!')
@@ -721,15 +684,6 @@ def add_perfume():
             db.session.commit()
             mat2.mat_stock = mat2.mat_stock-1
             db.session.commit()
-            made_by = Made_by(emp_id, ProductID)
-            db.session.add(made_by)
-            db.session.commit()
-            made_perfume = MadePerfume(ProductID, emp_id)
-            db.session.add(made_perfume)
-            db.session.commit()
-            produces = Produces(emp_id, ProductID)
-            db.session.add(produces)
-            db.session.commit()
         else:
             flash('Insufficient material!')
     elif ProductID == 7:
@@ -745,15 +699,6 @@ def add_perfume():
             db.session.commit()
             mat2.mat_stock = mat2.mat_stock-1
             db.session.commit()
-            made_by = Made_by(emp_id, ProductID)
-            db.session.add(made_by)
-            db.session.commit()
-            made_perfume = MadePerfume(ProductID, emp_id)
-            db.session.add(made_perfume)
-            db.session.commit()
-            produces = Produces(emp_id, ProductID)
-            db.session.add(produces)
-            db.session.commit()
         else:
             flash('Insufficient material!')
     elif ProductID == 8:
@@ -764,15 +709,6 @@ def add_perfume():
             perfume.NumberOfStock = perfume.NumberOfStock+1
             db.session.commit()
             mat.mat_stock = mat.mat_stock-1
-            db.session.commit()
-            made_by = Made_by(emp_id, ProductID)
-            db.session.add(made_by)
-            db.session.commit()
-            made_perfume = MadePerfume(ProductID, emp_id)
-            db.session.add(made_perfume)
-            db.session.commit()
-            produces = Produces(emp_id, ProductID)
-            db.session.add(produces)
             db.session.commit()
         else:
             flash('Insufficient material!')
@@ -789,15 +725,6 @@ def add_perfume():
             db.session.commit()
             mat2.mat_stock = mat2.mat_stock-1
             db.session.commit()
-            made_by = Made_by(emp_id, ProductID)
-            db.session.add(made_by)
-            db.session.commit()
-            made_perfume = MadePerfume(ProductID, emp_id)
-            db.session.add(made_perfume)
-            db.session.commit()
-            produces = Produces(emp_id, ProductID)
-            db.session.add(produces)
-            db.session.commit()
         else:
             flash('Insufficient material!')
     elif ProductID == 10:
@@ -813,15 +740,6 @@ def add_perfume():
             db.session.commit()
             mat2.mat_stock = mat2.mat_stock-1
             db.session.commit()
-            made_by = Made_by(emp_id, ProductID)
-            db.session.add(made_by)
-            db.session.commit()
-            made_perfume = MadePerfume(ProductID, emp_id)
-            db.session.add(made_perfume)
-            db.session.commit()
-            produces = Produces(emp_id, ProductID)
-            db.session.add(produces)
-            db.session.commit()
         else:
             flash('Insufficient material!')
     elif ProductID == 11:
@@ -833,15 +751,6 @@ def add_perfume():
             db.session.commit()
             mat.mat_stock = mat.mat_stock-1
             db.session.commit()
-            made_by = Made_by(emp_id, ProductID)
-            db.session.add(made_by)
-            db.session.commit()
-            made_perfume = MadePerfume(ProductID, emp_id)
-            db.session.add(made_perfume)
-            db.session.commit()
-            produces = Produces(emp_id, ProductID)
-            db.session.add(produces)
-            db.session.commit()
         else:
             flash('Insufficient material!')
     elif ProductID == 12:
@@ -852,15 +761,6 @@ def add_perfume():
             perfume.NumberOfStock = perfume.NumberOfStock+1
             db.session.commit()
             mat.mat_stock = mat.mat_stock-1
-            db.session.commit()
-            made_by = Made_by(emp_id, ProductID)
-            db.session.add(made_by)
-            db.session.commit()
-            made_perfume = MadePerfume(ProductID, emp_id)
-            db.session.add(made_perfume)
-            db.session.commit()
-            produces = Produces(emp_id, ProductID)
-            db.session.add(produces)
             db.session.commit()
         else:
             flash('Insufficient material!')
@@ -877,15 +777,6 @@ def add_perfume():
             db.session.commit()
             mat2.mat_stock = mat2.mat_stock-1
             db.session.commit()
-            made_by = Made_by(emp_id, ProductID)
-            db.session.add(made_by)
-            db.session.commit()
-            made_perfume = MadePerfume(ProductID, emp_id)
-            db.session.add(made_perfume)
-            db.session.commit()
-            produces = Produces(emp_id, ProductID)
-            db.session.add(produces)
-            db.session.commit()
         else:
             flash('Insufficient material!')
     elif ProductID == 14:
@@ -897,15 +788,6 @@ def add_perfume():
             db.session.commit()
             mat.mat_stock = mat.mat_stock-1
             db.session.commit()
-            made_by = Made_by(emp_id, ProductID)
-            db.session.add(made_by)
-            db.session.commit()
-            made_perfume = MadePerfume(ProductID, emp_id)
-            db.session.add(made_perfume)
-            db.session.commit()
-            produces = Produces(emp_id, ProductID)
-            db.session.add(produces)
-            db.session.commit()
         else:
             flash('Insufficient material!')
     elif ProductID == 15:
@@ -916,15 +798,6 @@ def add_perfume():
             perfume.NumberOfStock = perfume.NumberOfStock+1
             db.session.commit()
             mat.mat_stock = mat.mat_stock-1
-            db.session.commit()
-            made_by = Made_by(emp_id, ProductID)
-            db.session.add(made_by)
-            db.session.commit()
-            made_perfume = MadePerfume(ProductID, emp_id)
-            db.session.add(made_perfume)
-            db.session.commit()
-            produces = Produces(emp_id, ProductID)
-            db.session.add(produces)
             db.session.commit()
         else:
             flash('Insufficient material!')
@@ -941,15 +814,6 @@ def add_perfume():
             db.session.commit()
             mat2.mat_stock = mat2.mat_stock-1
             db.session.commit()
-            made_by = Made_by(emp_id, ProductID)
-            db.session.add(made_by)
-            db.session.commit()
-            made_perfume = MadePerfume(ProductID, emp_id)
-            db.session.add(made_perfume)
-            db.session.commit()
-            produces = Produces(emp_id, ProductID)
-            db.session.add(produces)
-            db.session.commit()
         else:
             flash('Insufficient material!')
     elif ProductID == 17:
@@ -964,15 +828,6 @@ def add_perfume():
             mat.mat_stock = mat.mat_stock-1
             db.session.commit()
             mat2.mat_stock = mat2.mat_stock-1
-            db.session.commit()
-            made_by = Made_by(emp_id, ProductID)
-            db.session.add(made_by)
-            db.session.commit()
-            made_perfume = MadePerfume(ProductID, emp_id)
-            db.session.add(made_perfume)
-            db.session.commit()
-            produces = Produces(emp_id, ProductID)
-            db.session.add(produces)
             db.session.commit()
         else:
             flash('Insufficient material!')
@@ -989,15 +844,6 @@ def add_perfume():
             db.session.commit()
             mat2.mat_stock = mat2.mat_stock-1
             db.session.commit()
-            made_by = Made_by(emp_id, ProductID)
-            db.session.add(made_by)
-            db.session.commit()
-            made_perfume = MadePerfume(ProductID, emp_id)
-            db.session.add(made_perfume)
-            db.session.commit()
-            produces = Produces(emp_id, ProductID)
-            db.session.add(produces)
-            db.session.commit()
         else:
             flash('Insufficient material!')
     elif ProductID == 19:
@@ -1013,15 +859,6 @@ def add_perfume():
             db.session.commit()
             mat2.mat_stock = mat2.mat_stock-1
             db.session.commit()
-            made_by = Made_by(emp_id, ProductID)
-            db.session.add(made_by)
-            db.session.commit()
-            made_perfume = MadePerfume(ProductID, emp_id)
-            db.session.add(made_perfume)
-            db.session.commit()
-            produces = Produces(emp_id, ProductID)
-            db.session.add(produces)
-            db.session.commit()
         else:
             flash('Insufficient material!')
     else:
@@ -1036,15 +873,6 @@ def add_perfume():
             mat.mat_stock = mat.mat_stock - 1
             db.session.commit()
             mat2.mat_stock = mat2.mat_stock - 1
-            db.session.commit()
-            made_by = Made_by(emp_id, ProductID)
-            db.session.add(made_by)
-            db.session.commit()
-            made_perfume = MadePerfume(ProductID, emp_id)
-            db.session.add(made_perfume)
-            db.session.commit()
-            produces = Produces(emp_id, ProductID)
-            db.session.add(produces)
             db.session.commit()
         else:
             flash('Insufficient material!')
