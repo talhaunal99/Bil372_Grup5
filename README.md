@@ -1,4 +1,4 @@
-Dökümanlar kısmında şema,rapor,logical design, gitstats, miniworld assumption'u bulabilirsiniz.  <br />
+Dökümanlar kısmında şema, rapor, logical design, gitstats, miniworld assumption'u bulabilirsiniz.  <br />
 ----------------------------------------------
 Gereksinimler:  <br />
 Pycharm professional edition --> https://www.jetbrains.com/pycharm/download/  <br />
