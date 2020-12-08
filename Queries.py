@@ -3,7 +3,7 @@ from flask import Flask, request, flash, url_for, redirect, render_template, mak
 from flask_migrate import Migrate
 import datetime
 from model import db, app
-from model import Employee,Customer,CustomerLogin,Carrier,Chemist,Company,Content,Confirms,ConsistOf,Customer_Service,EmployeesOfCompany,Accountant,Includes,EmployeeLogin,AdminLogin,Admin,Analyst,Takes,TakesFirm,Order,Sells,Department,Made_by,MadePerfume,Manages,Material,MemberLicenceType,OrderDate,Packages,Perfume,Produces,ProductFeature,Supplier,Vehicle,VehicleFeatures,Worker,ProductQuantity
+from model import Employee,Customer,CustomerLogin,Carrier,Chemist,Company,Content,Confirms,ConsistOf,Customer_Service,EmployeesOfCompany,Accountant,Includes,EmployeeLogin,AdminLogin,Admin,Analyst,Takes,Order,Sells,Department,Made_by,MadePerfume,Manages,Material,MemberLicenceType,OrderDate,Packages,Perfume,Produces,ProductFeature,Supplier,Vehicle,VehicleFeatures,Worker,ProductQuantity
 
 
 @app.route('/')
