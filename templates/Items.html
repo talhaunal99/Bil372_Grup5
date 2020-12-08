@@ -43,19 +43,25 @@
             </a>
           </div>
           <div class="u-custom-menu u-nav-container">
-            <ul class="u-nav u-unstyled"><li class="u-nav-item"><a class="u-button-style u-nav-link" href="/">Logout</a></ul>
+            <ul class="u-nav u-unstyled"><li class="u-nav-item"><a class="u-button-style u-nav-link" style="margin-left: 100%;" href="/">Logout</a></ul>
           </div>
           <div class="u-custom-menu u-nav-container-collapse">
             <div class="u-black u-container-style u-inner-container-layout u-opacity u-opacity-95 u-sidenav">
               <div class="u-sidenav-overflow">
                 <div class="u-menu-close"></div>
-                <ul class="u-align-center u-nav u-popupmenu-items u-unstyled u-nav-2"><li class="u-nav-item"><a class="u-button-style u-nav-link" href="/">Logout</a></ul>
+                <ul class="u-align-center u-nav u-popupmenu-items u-unstyled u-nav-2"><li class="u-nav-item"><a class="u-button-style u-nav-link"style="margin-left: 100%;" href="/">Logout</a></ul>
               </div>
             </div>
             <div class="u-black u-menu-overlay u-opacity u-opacity-70"></div>
           </div>
         </nav>
       </div></header>
+    {%if error == 1 %}
+        <p style="text-align: center;">Insufficient Budget!</p>
+    {%endif%}
+    {%if error == 2 %}
+        <p style="text-align: center;">You Bought a Material!</p>
+    {%endif%}
     <section class="u-align-left u-clearfix u-image u-shading u-section-1" data-image-width="2000" data-image-height="1333" id="sec-6398">
       <div class="u-clearfix u-sheet u-valign-middle u-sheet-1"><!--products--><!--products_options_json--><!--{"type":"Recent","source":"","tags":""}--><!--/products_options_json-->
         <div class="u-expanded-width u-products u-repeater u-repeater-1"><!--product_item-->
