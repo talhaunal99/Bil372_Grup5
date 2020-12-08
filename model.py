@@ -82,16 +82,6 @@ class OrderDate(db.Model): #Normalization
         self.order_no = order_no
         self.order_date = order_date
 
-
-class Made_by(db.Model):
-    __tablename__ = 'Made_by'
-    madebyID = db.Column(db.Integer, db.ForeignKey('Employee.memberID'),primary_key=True)
-    perfumeID=db.Column(db.Integer,db.ForeignKey('Perfume.ProductID'),primary_key=True)
-
-    def __init__(self, madebyID, perfumeID):
-        self.madebyID = madebyID
-        self.perfumeID = perfumeID
-
 class Content(db.Model):
     __tablename__ = 'Content'
     contentId = db.Column(db.Integer, primary_key=True)
@@ -158,16 +148,6 @@ class Perfume(db.Model):
         self.Price = Price
         self.Duration = Duration
         self.NumberOfStock = NumberOfStock
-
-
-class MadePerfume(db.Model): #Normalization
-    __tablename__ = 'MadePerfume'
-    ProductId = db.Column(db.Integer,primary_key=True,autoincrement=True)
-    made_by = db.Column(db.Integer,db.ForeignKey('Employee.memberID'))
-
-    def __init__(self, ProductId, made_by):
-        self.ProductId = ProductId
-        self.made_by = made_by
 
 class Department(db.Model):
     __tablename__ = 'Department'
@@ -269,15 +249,6 @@ class Manages(db.Model):
     def __init__(self, C_id, memberID):
         self.C_id = C_id
         self.memberID = memberID
-
-class Produces(db.Model):
-    __tablename__ = 'Produces'
-    chemist_id = db.Column(db.Integer, db.ForeignKey('Employee.memberID'),primary_key=True)
-    ProductID = db.Column(db.Integer, db.ForeignKey('Perfume.ProductID'),primary_key=True)
-
-    def __init__(self, chemist_id, ProductID):
-        self.chemist_id = chemist_id
-        self.ProductID = ProductID
 
 class Material(db.Model):
     __tablename__ = 'Material'
