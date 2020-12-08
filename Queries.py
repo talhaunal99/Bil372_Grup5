@@ -582,6 +582,482 @@ def deliver():
     db.session.commit()
     response = make_response(render_template('list_orders_forCarriers.html', emp_id=emp_id, Order=Order.query.all(),OrderDate=OrderDate.query.all()))
     return response
+
+@app.route('/add_perfume')
+def add_perfume():
+    id=request.args.get('id')
+    print("pro", id)
+    emp_id = int(request.cookies.get("emp_id"))
+    ProductID = int(id)
+    if ProductID == 1:
+        print("here")
+        mat_id = 6
+        mat = Material.query.filter_by(mat_id = mat_id).first()
+        if mat.mat_stock>0:
+            perfume = Perfume.query.filter_by(ProductID = ProductID).first()
+            print(perfume.Category)
+            perfume.NumberOfStock = perfume.NumberOfStock+1
+            db.session.commit()
+            mat.mat_stock = mat.mat_stock-1
+            db.session.commit()
+            made_by = Made_by(emp_id, ProductID)
+            db.session.add(made_by)
+            db.session.commit()
+            made_perfume = MadePerfume(ProductID, emp_id)
+            db.session.add(made_perfume)
+            db.session.commit()
+            produces = Produces(emp_id, ProductID)
+            db.session.add(produces)
+            db.session.commit()
+        else:
+            flash('Insufficient material!')
+    elif ProductID == 2:
+        mat_id = 2
+        mat_id2 = 5
+        mat = Material.query.filter_by(mat_id = mat_id).first()
+        mat2 = Material.query.filter_by(mat_id = mat_id2).first()
+        if mat.mat_stock>0 and mat2.mat_stock>0:
+            perfume = Perfume.query.filter_by(ProductID = ProductID).first()
+            perfume.NumberOfStock = perfume.NumberOfStock+1
+            db.session.commit()
+            mat.mat_stock = mat.mat_stock-1
+            db.session.commit()
+            mat2.mat_stock = mat2.mat_stock-1
+            db.session.commit()
+            made_by = Made_by(emp_id, ProductID)
+            db.session.add(made_by)
+            db.session.commit()
+            made_perfume = MadePerfume(ProductID, emp_id)
+            db.session.add(made_perfume)
+            db.session.commit()
+            produces = Produces(emp_id, ProductID)
+            db.session.add(produces)
+            db.session.commit()
+        else:
+            flash('Insufficient material!')
+    elif ProductID == 3:
+        mat_id = 5
+        mat_id2 = 9
+        mat = Material.query.filter_by(mat_id = mat_id).first()
+        mat2 = Material.query.filter_by(mat_id = mat_id2).first()
+        if mat.mat_stock>0 and mat2.mat_stock>0:
+            perfume = Perfume.query.filter_by(ProductID = ProductID).first()
+            perfume.NumberOfStock = perfume.NumberOfStock+1
+            db.session.commit()
+            mat.mat_stock = mat.mat_stock-1
+            db.session.commit()
+            mat2.mat_stock = mat2.mat_stock-1
+            db.session.commit()
+            made_by = Made_by(emp_id, ProductID)
+            db.session.add(made_by)
+            db.session.commit()
+            made_perfume = MadePerfume(ProductID, emp_id)
+            db.session.add(made_perfume)
+            db.session.commit()
+            produces = Produces(emp_id, ProductID)
+            db.session.add(produces)
+            db.session.commit()
+        else:
+            flash('Insufficient material!')
+    elif ProductID == 4:
+        mat_id = 2
+        mat_id2 = 11
+        mat = Material.query.filter_by(mat_id = mat_id).first()
+        mat2 = Material.query.filter_by(mat_id = mat_id2).first()
+        if mat.mat_stock>0 and mat2.mat_stock>0:
+            perfume = Perfume.query.filter_by(ProductID = ProductID).first()
+            perfume.NumberOfStock = perfume.NumberOfStock+1
+            db.session.commit()
+            mat.mat_stock = mat.mat_stock-1
+            db.session.commit()
+            mat2.mat_stock = mat2.mat_stock-1
+            db.session.commit()
+            made_by = Made_by(emp_id, ProductID)
+            db.session.add(made_by)
+            db.session.commit()
+            made_perfume = MadePerfume(ProductID, emp_id)
+            db.session.add(made_perfume)
+            db.session.commit()
+            produces = Produces(emp_id, ProductID)
+            db.session.add(produces)
+            db.session.commit()
+        else:
+            flash('Insufficient material!')
+    elif ProductID == 5:
+        mat_id = 2
+        mat_id2 = 6
+        mat = Material.query.filter_by(mat_id = mat_id).first()
+        mat2 = Material.query.filter_by(mat_id = mat_id2).first()
+        if mat.mat_stock>0 and mat2.mat_stock>0:
+            perfume = Perfume.query.filter_by(ProductID = ProductID).first()
+            perfume.NumberOfStock = perfume.NumberOfStock+1
+            db.session.commit()
+            mat.mat_stock = mat.mat_stock-1
+            db.session.commit()
+            mat2.mat_stock = mat2.mat_stock-1
+            db.session.commit()
+            made_by = Made_by(emp_id, ProductID)
+            db.session.add(made_by)
+            db.session.commit()
+            made_perfume = MadePerfume(ProductID, emp_id)
+            db.session.add(made_perfume)
+            db.session.commit()
+            produces = Produces(emp_id, ProductID)
+            db.session.add(produces)
+            db.session.commit()
+        else:
+            flash('Insufficient material!')
+    elif ProductID == 6:
+        mat_id = 12
+        mat_id2 = 13
+        mat = Material.query.filter_by(mat_id = mat_id).first()
+        mat2 = Material.query.filter_by(mat_id = mat_id2).first()
+        if mat.mat_stock>0 and mat2.mat_stock>0:
+            perfume = Perfume.query.filter_by(ProductID = ProductID).first()
+            perfume.NumberOfStock = perfume.NumberOfStock+1
+            db.session.commit()
+            mat.mat_stock = mat.mat_stock-1
+            db.session.commit()
+            mat2.mat_stock = mat2.mat_stock-1
+            db.session.commit()
+            made_by = Made_by(emp_id, ProductID)
+            db.session.add(made_by)
+            db.session.commit()
+            made_perfume = MadePerfume(ProductID, emp_id)
+            db.session.add(made_perfume)
+            db.session.commit()
+            produces = Produces(emp_id, ProductID)
+            db.session.add(produces)
+            db.session.commit()
+        else:
+            flash('Insufficient material!')
+    elif ProductID == 7:
+        mat_id = 12
+        mat_id2 = 15
+        mat = Material.query.filter_by(mat_id = mat_id).first()
+        mat2 = Material.query.filter_by(mat_id = mat_id2).first()
+        if mat.mat_stock>0 and mat2.mat_stock>0:
+            perfume = Perfume.query.filter_by(ProductID = ProductID).first()
+            perfume.NumberOfStock = perfume.NumberOfStock+1
+            db.session.commit()
+            mat.mat_stock = mat.mat_stock-1
+            db.session.commit()
+            mat2.mat_stock = mat2.mat_stock-1
+            db.session.commit()
+            made_by = Made_by(emp_id, ProductID)
+            db.session.add(made_by)
+            db.session.commit()
+            made_perfume = MadePerfume(ProductID, emp_id)
+            db.session.add(made_perfume)
+            db.session.commit()
+            produces = Produces(emp_id, ProductID)
+            db.session.add(produces)
+            db.session.commit()
+        else:
+            flash('Insufficient material!')
+    elif ProductID == 8:
+        mat_id = 7
+        mat = Material.query.filter_by(mat_id = mat_id).first()
+        if mat.mat_stock>0:
+            perfume = Perfume.query.filter_by(ProductID = ProductID).first()
+            perfume.NumberOfStock = perfume.NumberOfStock+1
+            db.session.commit()
+            mat.mat_stock = mat.mat_stock-1
+            db.session.commit()
+            made_by = Made_by(emp_id, ProductID)
+            db.session.add(made_by)
+            db.session.commit()
+            made_perfume = MadePerfume(ProductID, emp_id)
+            db.session.add(made_perfume)
+            db.session.commit()
+            produces = Produces(emp_id, ProductID)
+            db.session.add(produces)
+            db.session.commit()
+        else:
+            flash('Insufficient material!')
+    elif ProductID == 9:
+        mat_id = 2
+        mat_id2 = 3
+        mat = Material.query.filter_by(mat_id = mat_id).first()
+        mat2 = Material.query.filter_by(mat_id = mat_id2).first()
+        if mat.mat_stock>0 and mat2.mat_stock>0:
+            perfume = Perfume.query.filter_by(ProductID = ProductID).first()
+            perfume.NumberOfStock = perfume.NumberOfStock+1
+            db.session.commit()
+            mat.mat_stock = mat.mat_stock-1
+            db.session.commit()
+            mat2.mat_stock = mat2.mat_stock-1
+            db.session.commit()
+            made_by = Made_by(emp_id, ProductID)
+            db.session.add(made_by)
+            db.session.commit()
+            made_perfume = MadePerfume(ProductID, emp_id)
+            db.session.add(made_perfume)
+            db.session.commit()
+            produces = Produces(emp_id, ProductID)
+            db.session.add(produces)
+            db.session.commit()
+        else:
+            flash('Insufficient material!')
+    elif ProductID == 10:
+        mat_id = 2
+        mat_id2 = 6
+        mat = Material.query.filter_by(mat_id = mat_id).first()
+        mat2 = Material.query.filter_by(mat_id = mat_id2).first()
+        if mat.mat_stock>0 and mat2.mat_stock>0:
+            perfume = Perfume.query.filter_by(ProductID = ProductID).first()
+            perfume.NumberOfStock = perfume.NumberOfStock+1
+            db.session.commit()
+            mat.mat_stock = mat.mat_stock-1
+            db.session.commit()
+            mat2.mat_stock = mat2.mat_stock-1
+            db.session.commit()
+            made_by = Made_by(emp_id, ProductID)
+            db.session.add(made_by)
+            db.session.commit()
+            made_perfume = MadePerfume(ProductID, emp_id)
+            db.session.add(made_perfume)
+            db.session.commit()
+            produces = Produces(emp_id, ProductID)
+            db.session.add(produces)
+            db.session.commit()
+        else:
+            flash('Insufficient material!')
+    elif ProductID == 11:
+        mat_id = 13
+        mat = Material.query.filter_by(mat_id = mat_id).first()
+        if mat.mat_stock>0:
+            perfume = Perfume.query.filter_by(ProductID = ProductID).first()
+            perfume.NumberOfStock = perfume.NumberOfStock+1
+            db.session.commit()
+            mat.mat_stock = mat.mat_stock-1
+            db.session.commit()
+            made_by = Made_by(emp_id, ProductID)
+            db.session.add(made_by)
+            db.session.commit()
+            made_perfume = MadePerfume(ProductID, emp_id)
+            db.session.add(made_perfume)
+            db.session.commit()
+            produces = Produces(emp_id, ProductID)
+            db.session.add(produces)
+            db.session.commit()
+        else:
+            flash('Insufficient material!')
+    elif ProductID == 12:
+        mat_id = 8
+        mat = Material.query.filter_by(mat_id = mat_id).first()
+        if mat.mat_stock>0:
+            perfume = Perfume.query.filter_by(ProductID = ProductID).first()
+            perfume.NumberOfStock = perfume.NumberOfStock+1
+            db.session.commit()
+            mat.mat_stock = mat.mat_stock-1
+            db.session.commit()
+            made_by = Made_by(emp_id, ProductID)
+            db.session.add(made_by)
+            db.session.commit()
+            made_perfume = MadePerfume(ProductID, emp_id)
+            db.session.add(made_perfume)
+            db.session.commit()
+            produces = Produces(emp_id, ProductID)
+            db.session.add(produces)
+            db.session.commit()
+        else:
+            flash('Insufficient material!')
+    elif ProductID == 13:
+        mat_id = 1
+        mat_id2 = 4
+        mat = Material.query.filter_by(mat_id = mat_id).first()
+        mat2 = Material.query.filter_by(mat_id = mat_id2).first()
+        if mat.mat_stock>0 and mat2.mat_stock>0:
+            perfume = Perfume.query.filter_by(ProductID = ProductID).first()
+            perfume.NumberOfStock = perfume.NumberOfStock+1
+            db.session.commit()
+            mat.mat_stock = mat.mat_stock-1
+            db.session.commit()
+            mat2.mat_stock = mat2.mat_stock-1
+            db.session.commit()
+            made_by = Made_by(emp_id, ProductID)
+            db.session.add(made_by)
+            db.session.commit()
+            made_perfume = MadePerfume(ProductID, emp_id)
+            db.session.add(made_perfume)
+            db.session.commit()
+            produces = Produces(emp_id, ProductID)
+            db.session.add(produces)
+            db.session.commit()
+        else:
+            flash('Insufficient material!')
+    elif ProductID == 14:
+        mat_id = 7
+        mat = Material.query.filter_by(mat_id = mat_id).first()
+        if mat.mat_stock>0:
+            perfume = Perfume.query.filter_by(ProductID = ProductID).first()
+            perfume.NumberOfStock = perfume.NumberOfStock+1
+            db.session.commit()
+            mat.mat_stock = mat.mat_stock-1
+            db.session.commit()
+            made_by = Made_by(emp_id, ProductID)
+            db.session.add(made_by)
+            db.session.commit()
+            made_perfume = MadePerfume(ProductID, emp_id)
+            db.session.add(made_perfume)
+            db.session.commit()
+            produces = Produces(emp_id, ProductID)
+            db.session.add(produces)
+            db.session.commit()
+        else:
+            flash('Insufficient material!')
+    elif ProductID == 15:
+        mat_id = 9
+        mat = Material.query.filter_by(mat_id = mat_id).first()
+        if mat.mat_stock>0:
+            perfume = Perfume.query.filter_by(ProductID = ProductID).first()
+            perfume.NumberOfStock = perfume.NumberOfStock+1
+            db.session.commit()
+            mat.mat_stock = mat.mat_stock-1
+            db.session.commit()
+            made_by = Made_by(emp_id, ProductID)
+            db.session.add(made_by)
+            db.session.commit()
+            made_perfume = MadePerfume(ProductID, emp_id)
+            db.session.add(made_perfume)
+            db.session.commit()
+            produces = Produces(emp_id, ProductID)
+            db.session.add(produces)
+            db.session.commit()
+        else:
+            flash('Insufficient material!')
+    elif ProductID == 16:
+        mat_id = 11
+        mat_id2 = 12
+        mat = Material.query.filter_by(mat_id = mat_id).first()
+        mat2 = Material.query.filter_by(mat_id = mat_id2).first()
+        if mat.mat_stock>0 and mat2.mat_stock>0:
+            perfume = Perfume.query.filter_by(ProductID = ProductID).first()
+            perfume.NumberOfStock = perfume.NumberOfStock+1
+            db.session.commit()
+            mat.mat_stock = mat.mat_stock-1
+            db.session.commit()
+            mat2.mat_stock = mat2.mat_stock-1
+            db.session.commit()
+            made_by = Made_by(emp_id, ProductID)
+            db.session.add(made_by)
+            db.session.commit()
+            made_perfume = MadePerfume(ProductID, emp_id)
+            db.session.add(made_perfume)
+            db.session.commit()
+            produces = Produces(emp_id, ProductID)
+            db.session.add(produces)
+            db.session.commit()
+        else:
+            flash('Insufficient material!')
+    elif ProductID == 17:
+        mat_id = 13
+        mat_id2 = 14
+        mat = Material.query.filter_by(mat_id = mat_id).first()
+        mat2 = Material.query.filter_by(mat_id = mat_id2).first()
+        if mat.mat_stock>0 and mat2.mat_stock>0:
+            perfume = Perfume.query.filter_by(ProductID = ProductID).first()
+            perfume.NumberOfStock = perfume.NumberOfStock+1
+            db.session.commit()
+            mat.mat_stock = mat.mat_stock-1
+            db.session.commit()
+            mat2.mat_stock = mat2.mat_stock-1
+            db.session.commit()
+            made_by = Made_by(emp_id, ProductID)
+            db.session.add(made_by)
+            db.session.commit()
+            made_perfume = MadePerfume(ProductID, emp_id)
+            db.session.add(made_perfume)
+            db.session.commit()
+            produces = Produces(emp_id, ProductID)
+            db.session.add(produces)
+            db.session.commit()
+        else:
+            flash('Insufficient material!')
+    elif ProductID == 18:
+        mat_id = 5
+        mat_id2 = 13
+        mat = Material.query.filter_by(mat_id = mat_id).first()
+        mat2 = Material.query.filter_by(mat_id = mat_id2).first()
+        if mat.mat_stock>0 and mat2.mat_stock>0:
+            perfume = Perfume.query.filter_by(ProductID = ProductID).first()
+            perfume.NumberOfStock = perfume.NumberOfStock+1
+            db.session.commit()
+            mat.mat_stock = mat.mat_stock-1
+            db.session.commit()
+            mat2.mat_stock = mat2.mat_stock-1
+            db.session.commit()
+            made_by = Made_by(emp_id, ProductID)
+            db.session.add(made_by)
+            db.session.commit()
+            made_perfume = MadePerfume(ProductID, emp_id)
+            db.session.add(made_perfume)
+            db.session.commit()
+            produces = Produces(emp_id, ProductID)
+            db.session.add(produces)
+            db.session.commit()
+        else:
+            flash('Insufficient material!')
+    elif ProductID == 19:
+        mat_id = 5
+        mat_id2 = 6
+        mat = Material.query.filter_by(mat_id = mat_id).first()
+        mat2 = Material.query.filter_by(mat_id = mat_id2).first()
+        if mat.mat_stock>0 and mat2.mat_stock>0:
+            perfume = Perfume.query.filter_by(ProductID = ProductID).first()
+            perfume.NumberOfStock = perfume.NumberOfStock+1
+            db.session.commit()
+            mat.mat_stock = mat.mat_stock-1
+            db.session.commit()
+            mat2.mat_stock = mat2.mat_stock-1
+            db.session.commit()
+            made_by = Made_by(emp_id, ProductID)
+            db.session.add(made_by)
+            db.session.commit()
+            made_perfume = MadePerfume(ProductID, emp_id)
+            db.session.add(made_perfume)
+            db.session.commit()
+            produces = Produces(emp_id, ProductID)
+            db.session.add(produces)
+            db.session.commit()
+        else:
+            flash('Insufficient material!')
+    else:
+        mat_id = 2
+        mat_id2 = 14
+        mat = Material.query.filter_by(mat_id=mat_id).first()
+        mat2 = Material.query.filter_by(mat_id=mat_id2).first()
+        if mat.mat_stock > 0 and mat2.mat_stock > 0:
+            perfume = Perfume.query.filter_by(ProductID=ProductID).first()
+            perfume.NumberOfStock = perfume.NumberOfStock + 1
+            db.session.commit()
+            mat.mat_stock = mat.mat_stock - 1
+            db.session.commit()
+            mat2.mat_stock = mat2.mat_stock - 1
+            db.session.commit()
+            made_by = Made_by(emp_id, ProductID)
+            db.session.add(made_by)
+            db.session.commit()
+            made_perfume = MadePerfume(ProductID, emp_id)
+            db.session.add(made_perfume)
+            db.session.commit()
+            produces = Produces(emp_id, ProductID)
+            db.session.add(produces)
+            db.session.commit()
+        else:
+            flash('Insufficient material!')
+
+    emp_id = int(request.cookies.get("emp_id"))
+    emplog_id = int(request.cookies.get("emplog_id"))
+    emp = Employee.query.filter_by(memberID = emp_id).first()
+    emplog = EmployeeLogin.query.filter_by(employeeID = emplog_id).first()
+    response = make_response(render_template('MakePerfume.html', employee=emp, employeelogin=emplog))
+    response.set_cookie("emp_id", str(emp_id))
+    response.set_cookie("emplog_id", str(emplog_id))
+    response.set_cookie("emplog_type", str(emplog.type))
+    return response
+
 if __name__ == "__main__":
     app.secret_key = 'super secret key'
     app.config['SESSION_TYPE'] = 'filesystem'
