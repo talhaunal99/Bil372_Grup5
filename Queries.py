@@ -392,6 +392,35 @@ def add_new_employee():
             db.session.add(emplog)
             db.session.commit()
 
+            if type == "accountant":
+                newemp = Accountant(id)
+                db.session.add(newemp)
+                db.session.commit()
+            elif type == "analyst":
+                newemp = Analyst(id)
+                db.session.add(newemp)
+                db.session.commit()
+            elif type == "carrier":
+                newemp = Carrier(id)
+                db.session.add(newemp)
+                db.session.commit()
+            elif type == "chemist":
+                newemp = Chemist(id)
+                db.session.add(newemp)
+                db.session.commit()
+            elif type == "customer service":
+                newemp = Accountant(id)
+                db.session.add(newemp)
+                db.session.commit()
+            elif type == "supplier":
+                newemp = Supplier(id)
+                db.session.add(newemp)
+                db.session.commit()
+            else:
+                newemp = Worker(id)
+                db.session.add(newemp)
+                db.session.commit()
+
             response = make_response(render_template('AdminHomePage.html', admin_emp=admin_emp, admin=admin, adminlog=adminlog))
             response.set_cookie("emp_id", str(admin_emp.memberID))
             response.set_cookie("admin_id", str(admin.memberID))
