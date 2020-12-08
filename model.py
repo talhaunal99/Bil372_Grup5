@@ -16,12 +16,10 @@ class Customer(db.Model):
     cus_email=db.Column(db.String, unique=True)
     cus_name = db.Column(db.String(80))
     cus_surname = db.Column(db.String(80))
-    cus_Birthdate = db.Column(db.DateTime)
+    cus_Birthdate = db.Column(db.Date)
     cus_telNo=db.Column(db.String)
     cus_totalOrder=db.Column(db.Integer)
     cus_address = db.Column(db.String)
-    rel = db.relation("Order", cascade="all,delete-orphan")
-    rel2 = db.relation("customer_login", cascade="all,delete-orphan")
 
     def __init__(self, cus_sex, cus_email, cus_name, cus_surname, cus_Birthdate, cus_telNo, cus_totalOrder, cus_address):
         self.cus_sex = cus_sex
@@ -34,11 +32,10 @@ class Customer(db.Model):
         self.cus_address = cus_address
 
 class EmployeeLogin(db.Model):
-    employeeID = db.Column(db.Integer,db.ForeignKey("Employee.memberID"),primary_key=True)
+    employeeID = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String, unique=True)
     password = db.Column(db.String)
     type = db.Column(db.String)
-    parent = db.relation("Employee", back_populates="rel15")
 
     def __init__(self, employeeID, username, password, type):
         self.employeeID = employeeID
@@ -47,10 +44,9 @@ class EmployeeLogin(db.Model):
         self.type = type
 
 class CustomerLogin(db.Model):
-    customerID=db.Column(db.Integer,db.ForeignKey("customer.cus_id"),primary_key=True)
+    customerID=db.Column(db.Integer,primary_key=True)
     username=db.Column(db.String,unique=True)
     password=db.Column(db.String)
-    parent = db.relation("customer", back_populates="rel2")
 
     def __init__(self, customerID, username, password):
         self.customerID = customerID
@@ -72,15 +68,11 @@ class Order(db.Model):
     order_no = db.Column(db.Integer,autoincrement=True,primary_key=True,unique=True)
     customer_id=db.Column(db.Integer, db.ForeignKey('customer.cus_id'),primary_key=True)
     carrier_id = db.Column(db.Integer,db.ForeignKey('Employee.memberID'),primary_key=True)
-    parent = db.relation("customer", back_populates="rel")
-    parent2 = db.relation("Employee", back_populates="rel16")
-    rel=db.relation("OrderDate",cascade="all,delete-orphan")
 
 class OrderDate(db.Model): #Normalization
     __tablename__ = 'OrderDate'
     order_no = db.Column(db.Integer,db.ForeignKey('Order.order_no'), primary_key=True)
-    order_date = db.Column(db.DateTime)
-    parent2 = db.relation("Order", back_populates="rel")
+    order_date = db.Column(db.Date)
 
     def __init__(self, order_no, order_date):
         self.order_no = order_no
@@ -134,7 +126,6 @@ class Vehicle(db.Model):
     c_id = db.Column(db.Integer,db.ForeignKey('Company.C_id'))
     vehicle_id=db.Column(db.Integer,primary_key=True,autoincrement=True)
     package=db.Column(db.Integer) #the number of products which are carried
-    rel = db.relation("VehicleFeatures", cascade="all,delete-orphan")
 
     def __init__(self, c_id, vehicle_id, package):
         self.c_id = c_id
@@ -226,8 +217,8 @@ class ProductFeature(db.Model): #Normalization
     __tablename__ = 'ProductFeature'
     packageID = db.Column(db.Integer,primary_key=True,autoincrement=True)
     ProductId = db.Column(db.Integer,db.ForeignKey('Perfume.ProductID'))
-    Expiration_Date = db.Column(db.DateTime)
-    production_Date = db.Column(db.DateTime)
+    Expiration_Date = db.Column(db.Date)
+    production_Date = db.Column(db.Date)
 
     def __init__(self, packageID, ProductId, Expiration_Date, production_Date):
         self.packageID = packageID
@@ -317,27 +308,12 @@ class Employee(db.Model):
     surname = db.Column(db.String)
     address = db.Column(db.String)
     telNo = db.Column(db.String)
-    Birthdate = db.Column(db.DateTime)
-    startDate = db.Column(db.DateTime)
+    Birthdate = db.Column(db.Date)
+    startDate = db.Column(db.Date)
     salary = db.Column(db.Integer)
     email = db.Column(db.String)
     department_id=db.Column(db.Integer,db.ForeignKey('Department.department_id'), primary_key = True)
-    rel = db.relation("MadePerfume", cascade="all,delete-orphan")
-    rel2 = db.relation("Confirms", cascade="all,delete-orphan")
-    rel3 = db.relation("Packages", cascade="all,delete-orphan")
-    rel4 = db.relation("Manages", cascade="all,delete-orphan")
-    rel5 = db.relation("Produces", cascade="all,delete-orphan")
-    rel6 = db.relation("EmployeesOfCompany", cascade="all,delete-orphan")
-    rel7 = db.relation("Carrier", cascade="all,delete-orphan")
-    rel8 = db.relation("MemberLicenceType", cascade="all,delete-orphan")
-    rel9 = db.relation("Chemist", cascade="all,delete-orphan")
-    rel10 = db.relation("Admin", cascade="all,delete-orphan")
-    rel11 = db.relation("Analyst", cascade="all,delete-orphan")
-    rel12 = db.relation("Customer_Service", cascade="all,delete-orphan")
-    rel13 = db.relation("Supplier", cascade="all,delete-orphan")
-    rel14 = db.relation("Accountant", cascade="all,delete-orphan")
-    rel15 = db.relation("employee_login", cascade="all,delete-orphan")
-    rel16 = db.relation("Order", cascade="all,delete-orphan")
+
     def __init__(self, name, surname, address, telNo, Birthdate, startDate, salary, email, department_id):
         self.name = name
         self.surname = surname
@@ -438,7 +414,3 @@ class Chemist(db.Model):
     def __init__(self, memberID):
         self.memberID = memberID
 db.create_all()
-
-
-
-
