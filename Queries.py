@@ -512,6 +512,25 @@ def shop():
     response.set_cookie("cuslog_id", str(cuslog_id))
     return response
 
+@app.route('/get_material')
+def get_material():
+    mat_id=request.args.get('mat_id')
+    material=Material.query.filter_by(mat_id=mat_id).first()
+    material.mat_stock = material.mat_stock + 1
+    db.session.commit()
+    company = Company.query.filter_by(C_id = 1).first()
+    company.Budget = company.Budget - material.mat_price
+    db.session.commit()
+    emp_id = int(request.cookies.get("emp_id"))
+    emplog_id = int(request.cookies.get("emplog_id"))
+    emp = Employee.query.filter_by(memberID = emp_id).first()
+    emplog = EmployeeLogin.query.filter_by(employeeID = emplog_id).first()
+    response = make_response(render_template('Items.html', employee=emp, employeelogin=emplog))
+    response.set_cookie("emp_id", str(emp_id))
+    response.set_cookie("emplog_id", str(emplog_id))
+    response.set_cookie("emplog_type", str(emplog.type))
+    return response
+
 if __name__ == "__main__":
     app.secret_key = 'super secret key'
     app.config['SESSION_TYPE'] = 'filesystem'
