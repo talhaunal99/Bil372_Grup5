@@ -16,4 +16,4 @@ password = password  <br />
 
 ------------------------------------------
 
-*Miniworld assumption, er diagram ve logical design'ı daha önceden yüklemiştik. Silinip tekrar için, gitstats başlangıç tarihlerini yanlış gösteriyor.
+*Miniworld assumption, er diagram ve logical design'ı daha önceden yüklemiştik. Silinip tekrar yüklendiği için, gitstats başlangıç tarihlerini yanlış gösteriyor.
