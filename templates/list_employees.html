@@ -100,7 +100,6 @@
                    <td>{{ emp.salary }}</td>
                    <td>{{ emp.email }}</td>
                    <td>{{ emp.department_id }}</td>
-                    <td><button class="btn btn-primary btn-sm">Edit</button>
                     <td> <a href = "{{ url_for('update_employee_info_page', memberID=emp.memberID  ) }}">Edit  </a> </td>
             {% endfor %}
               </tr>
